@@ -7,9 +7,14 @@ export default {
         login: 'Войти',
       },
       loginCardFooter: {
-        noAccount: 'Нет аккаунта?',
+        haveNoAccount: 'Нет аккаунта?',
         registration: 'Регистрация',
       },
     },
+    pageNotFound: {
+      pageNotFound: 'Страница не найдена',
+      youCanGo: 'Но вы можете перейти',
+      toMainPage: 'на главную страницу',
+    }
   }
 };
