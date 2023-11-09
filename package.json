@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "chat",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "start": "npx start-server -s ./frontend/build",
     "build": "npm run build --prefix frontend",
