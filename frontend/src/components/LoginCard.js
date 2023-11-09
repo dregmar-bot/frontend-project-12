@@ -1,7 +1,7 @@
 import React from 'react';
-import {useTranslation} from "react-i18next";
-import {Field, Form, Formik} from "formik";
-import logo from "../images/gus.png";
+import { useTranslation } from 'react-i18next';
+import { Field, Form, Formik } from 'formik';
+import logo from '../images/gus.png';
 
 const LoginCardForm = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const LoginCardForm = () => {
       <Form
         className="col-12 col-md-6 mt-3 mt-mb-0"
       >
-        <h1 className="text-center mb-4">Войти</h1>
+        <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
         <div className="form-floating mb-3">
           <Field
             name="username"
@@ -23,7 +23,7 @@ const LoginCardForm = () => {
             id="username"
             className="form-control"
           />
-          <label htmlFor="username">Ваш ник</label>
+          <label htmlFor="username">{t('loginPage.loginForm.username')}</label>
         </div>
         <div className="form-floating mb-4">
           <Field
@@ -35,7 +35,7 @@ const LoginCardForm = () => {
             id="password"
             className="form-control"
           />
-          <label htmlFor="password">Пароль</label>
+          <label htmlFor="password">{t('loginPage.loginForm.password')}</label>
         </div>
         <button
           type="submit"
@@ -49,6 +49,8 @@ const LoginCardForm = () => {
 };
 
 const LoginCardBody = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="card-body row p-5">
       <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
