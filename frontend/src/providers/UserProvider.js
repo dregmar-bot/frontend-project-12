@@ -10,7 +10,7 @@ const user = {
 
 const UserProvider = ({ children }) => {
   const [activeUser, setUser] = useState(user);
-  const isAuthorized = () => activeUser.token ?? false;
+  const isAuthorized = () => activeUser.token ? true : false;
 
   return (
     <UserContext.Provider value={{activeUser, setUser, isAuthorized}}>
