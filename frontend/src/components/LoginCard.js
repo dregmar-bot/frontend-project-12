@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
-import logo from '../images/gus.png';
+import logo from '../images/logo.png';
+import UserContext from '../contexts/index.js';
+import axios from "axios";
 
 const LoginCardForm = () => {
   const { t } = useTranslation();
+  //const { activeUser, setUser, isAuthorized } = useContext(UserContext);
+
   return <Formik
     initialValues={{ email: '', password: ''}}
-    onSubmit={(values) => console.log(values)}
+    onSubmit={async (values) => {
+      const { username, password  } = values;
+      let data = {};
+      await axios.post('/api/v1/login', { username, password })
+        .then((response) => data = response.data);
+      // console.log(data);
+      }
+    }
   >
     {() => (
       <Form
@@ -67,7 +78,7 @@ const LoginCardFooter = () => {
   return (
     <div className="card-footer p-4">
       <div className="text-center">
-        <span>{t('loginPage.loginCardFooter.noAccount')}</span>
+        <span>{t('loginPage.loginCardFooter.haveNoAccount')}</span>
         <a href="/signup">{t('loginPage.loginCardFooter.registration')}</a>
       </div>
     </div>
