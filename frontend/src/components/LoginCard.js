@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
 import logo from '../images/logo.png';
@@ -7,16 +7,23 @@ import axios from "axios";
 
 const LoginCardForm = () => {
   const { t } = useTranslation();
-  //const { activeUser, setUser, isAuthorized } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
+  const [error, setError] = useState(null);
 
   return <Formik
-    initialValues={{ email: '', password: ''}}
+    initialValues={{ username: '', password: ''}}
     onSubmit={async (values) => {
       const { username, password  } = values;
-      let data = {};
-      await axios.post('/api/v1/login', { username, password })
-        .then((response) => data = response.data);
-      // console.log(data);
+      try {
+        const response = await axios.post('/api/v1/login', { username, password })
+        const { token } = response.data;
+        setUser({ username, password, token});
+        localStorage.setItem('goossengerToken', token);
+        window.location.replace('/');
+      } catch (e) {
+        setError(e.code);
+        console.log(error)
+      }
       }
     }
   >
@@ -32,9 +39,9 @@ const LoginCardForm = () => {
             required
             placeholder={t('loginPage.loginForm.username')}
             id="username"
-            className="form-control"
+            className={`form-control ${ error ? "is-invalid" : ''}`}
           />
-          <label htmlFor="username">{t('loginPage.loginForm.username')}</label>
+          <label className="form-label" htmlFor="username">{t('loginPage.loginForm.username')}</label>
         </div>
         <div className="form-floating mb-4">
           <Field
@@ -44,9 +51,10 @@ const LoginCardForm = () => {
             required
             placeholder={t('loginPage.loginForm.password')}
             id="password"
-            className="form-control"
+            className={`form-control ${ error ? "is-invalid" : ''}`}
           />
-          <label htmlFor="password">{t('loginPage.loginForm.password')}</label>
+          {error ? <div className="invalid-tooltip">{t(`loginPage.errors.${error}`)}</div> : null}
+          <label className="form-label" htmlFor="password">{t('loginPage.loginForm.password')}</label>
         </div>
         <button
           type="submit"
@@ -79,6 +87,7 @@ const LoginCardFooter = () => {
     <div className="card-footer p-4">
       <div className="text-center">
         <span>{t('loginPage.loginCardFooter.haveNoAccount')}</span>
+        <> </>
         <a href="/signup">{t('loginPage.loginCardFooter.registration')}</a>
       </div>
     </div>
