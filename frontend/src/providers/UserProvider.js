@@ -4,7 +4,7 @@ import UserContext from '../contexts';
 const user = {
   username: null,
   password: null,
-  token: 123,
+  token: null,
 }
 
 
