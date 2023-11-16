@@ -30,6 +30,18 @@ export default {
         key_few: '{{count}} сообщения',
         key_many: '{{count}} сообщений',
       }
-    }
-  }
+    },
+    yupErrors: {
+      channelNameIsDuplicated: 'Канал с таким именем уже создан',
+    },
+    modals: {
+      addChannelModal: {
+        addChannel: 'Добавить канал',
+        channelName: 'Имя канала',
+        cancel: 'Отменить',
+        submit: 'Отправить',
+        creating: 'Создание...',
+      },
+    },
+  },
 };
