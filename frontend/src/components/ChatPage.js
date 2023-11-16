@@ -12,7 +12,7 @@ import MessagesBox from './MessagesBox';
 const ChatPage = () => {
 
   useEffect(() => {
-    const token = localStorage.getItem('goossengerToken');
+    const token = localStorage.userToken;
     if (!token) {
       window.location.replace('/login');
     }
