@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import logo from '../images/logo.png';
-import UserContext from '../contexts/index.js';
+import UserContext from '../contexts/userContext.js';
 import axios from "axios";
 
 const LoginCardForm = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { setUser } = useContext(UserContext);
   const [error, setError] = useState(null);
@@ -17,9 +19,12 @@ const LoginCardForm = () => {
       try {
         const response = await axios.post('/api/v1/login', { username, password })
         const { token } = response.data;
-        setUser({ username, password, token});
-        localStorage.setItem('goossengerToken', token);
-        window.location.replace('/');
+        const activeUser = { username, password, token};
+        setUser(activeUser);
+        localStorage.userToken = token;
+        localStorage.username = username;
+        localStorage.userPassword = password;
+        navigate('/');
       } catch (e) {
         setError(e.code);
         console.log(error)
