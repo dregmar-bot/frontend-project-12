@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
-import UserContext from '../contexts/index.js';
+import React from 'react';
 
 
 const Navbar = () => {
-  const { activeUser, isAuthorized } = useContext(UserContext);
-  console.log(activeUser)
-
+  const isAuthorized = () => localStorage.userToken ?? false;
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
