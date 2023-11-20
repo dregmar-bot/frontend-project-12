@@ -20,9 +20,13 @@ const MessagesBox = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const message = { body: text, channelId, username: localStorage.username };
-    sendMessage(message);
-    setText('');
+    try {
+      const message = { body: text, channelId, username: localStorage.username };
+      sendMessage(message);
+      setText('');
+    } catch(e) {
+      console.log(e);
+    }
   };
 
   const handleChange = (e) => {
