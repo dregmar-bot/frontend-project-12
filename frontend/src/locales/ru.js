@@ -23,6 +23,8 @@ export default {
     chatPage: {
       channelBox: {
         channels: 'Каналы',
+        remove: 'Удалить',
+        rename: 'Переименовать',
 
       },
       messagesBox: {
@@ -42,6 +44,12 @@ export default {
         submit: 'Отправить',
         creating: 'Создание...',
       },
+      removeChannelModal: {
+        removeChannel: 'Удалить канал',
+        areYouSure: 'Вы уверены?',
+        remove: 'Удалить',
+        cancel: 'Отменить',
+      }
     },
   },
 };

@@ -1,7 +1,7 @@
 import  '../styles.scss';
 import  'bootstrap';
 import React, { useContext } from 'react';
-import { addChannel } from '../slices/channels';
+import {addChannel, removeChannel } from '../slices/channels';
 import { addMessage } from '../slices/messages';
 import LoginPage from './LoginPage';
 import PageNotFound from './PageNotFound';
@@ -13,11 +13,16 @@ import { useDispatch } from 'react-redux';
 const App = () => {
   const dispatch = useDispatch();
   const { socket } = useContext(SocketContext);
+
   socket.on('newMessage', (payload) => {
     dispatch(addMessage(payload));
   });
   socket.on('newChannel', (payload) => {
-    dispatch(addChannel(payload))
+    dispatch(addChannel(payload));
+  });
+  socket.on('removeChannel', (payload) => {
+    console.log('hello')
+    dispatch(removeChannel(payload));
   });
 
   return (
