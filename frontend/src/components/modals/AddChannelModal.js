@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { channelsSelectors } from '../../slices/channels';
 import { Modal } from 'react-bootstrap';
-import { useContext } from'react';
 import SocketContext from '../../contexts/socketContext';
 
 
@@ -23,7 +22,6 @@ const AddChannelModal = ({ show, close }) => {
     ),
   });
 
-
   return (
     <Modal show={show} onHide={close} centered>
       <Modal.Header closeButton>
@@ -34,10 +32,14 @@ const AddChannelModal = ({ show, close }) => {
           initialValues={{ name: ''}}
           validationSchema={addChannelSchema}
           onSubmit={({ name }) => {
-            setLoading(true)
-            addChannel({ name })
-            setLoading(false);
-            close();
+            setLoading(true);
+            try {
+              addChannel({ name });
+              setLoading(false);
+              close();
+            } catch (e) {
+              console.log(e);
+            }
           }}
         >
           {({ errors, touched }) => (
