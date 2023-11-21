@@ -4,13 +4,35 @@ import resources from './locales/index.js';
 import React from 'react';
 import App from './components/App';
 import UserProvider from './providers/UserProvider';
-import StoreProvider from './providers/StoreProvider';
 import SocketProvider from './providers/SocketProvider';
 import { io } from 'socket.io-client';
+import messages, { addMessage } from "./slices/messages";
+import channels, { addChannel, removeChannel } from "./slices/channels";
+import { configureStore } from '@reduxjs/toolkit';
+import currentChannel from './slices/currentChannel';
+import { Provider } from "react-redux";
 
 
 const init = async () => {
+  const store = configureStore({
+    reducer: {
+      channels,
+      messages,
+      currentChannel,
+    },
+  });
+
   const socket = io();
+  socket.on('newMessage', (payload) => {
+    store.dispatch(addMessage(payload));
+  });
+  socket.on('newChannel', (payload) => {
+    store.dispatch(addChannel(payload));
+  });
+  socket.on('removeChannel', (payload) => {
+    store.dispatch(removeChannel(payload));
+  });
+
   const i18n = i18next.createInstance();
   await i18n
   .use(initReactI18next)
@@ -25,11 +47,11 @@ const init = async () => {
   return (
     <React.StrictMode>
       <UserProvider>
-        <StoreProvider>
+        <Provider store={store}>
           <SocketProvider socket={socket}>
             <App />
           </SocketProvider>
-        </StoreProvider>
+        </Provider>
       </UserProvider>
     </React.StrictMode>
   );
