@@ -1,16 +1,18 @@
-import React, { useState, useContext } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React, {useState, useContext, useEffect, useRef } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { channelsSelectors } from '../../slices/channels';
+import { channelsSelectors} from '../../slices/channels';
 import { Modal } from 'react-bootstrap';
 import SocketContext from '../../contexts/socketContext';
 
 
 const AddChannelModal = ({ show, close }) => {
   const [isLoading, setLoading] = useState(false);
+  const [value, setValue] = useState('');
+  const [error, setError] = useState(null);
   const { addChannel } = useContext(SocketContext);
+  const inputEl = useRef(null);
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
   const { t } = useTranslation();
 
@@ -22,55 +24,56 @@ const AddChannelModal = ({ show, close }) => {
     ),
   });
 
+  const handleChange = (e) => setValue(e.target.value);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const name = new FormData(e.target).get('name');
+    channelNameSchema.validate({ name })
+    .then(() => {
+      addChannel({ name} );
+      setLoading(false);
+      close();
+    }).catch((e) => {
+      setError(e.message);
+      setLoading(false);
+    })
+  }
+
+  useEffect(() =>{
+    setError(null);
+    setValue('');
+    if (inputEl.current) {
+      inputEl.current.focus();
+    }
+  }, [show])
+
   return (
     <Modal show={show} onHide={close} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t(`modals.channelModal.add`)}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Formik
-          initialValues={{ name: ''}}
-          validationSchema={channelNameSchema}
-          onSubmit={({ name }) => {
-            setLoading(true);
-            try {
-              addChannel({ name });
-              setLoading(false);
-              close();
-            } catch (e) {
-              console.log(e);
-            }
-          }}
-        >
-          {({ errors, touched }) => (
-            <Form>
-              <div>
-                <Field
-                  type="name"
-                  name="name"
-                  id="name"
-                  required
-                  autoFocus
-                  className={`mb-2 form-control ${
-                    touched.name && errors.name ? "is-invalid" : ""
-                  }`}
-                />
-                <ErrorMessage
-                  name="name"
-                  component="div"
-                  className="invalid-feedback"
-                />
-                <label className="visually-hidden" htmlFor="name">{t('modals.channelModal.channelName')}</label>
-              </div>
-              <div className="d-flex justify-content-end">
-                <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.channelModal.cancel')}</button>
-                <button type="submit" className="btn btn-primary" disabled={isLoading}>
-                  {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.creating')}
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              ref={inputEl}
+              name="name"
+              id="name"
+              className={`mb-2 form-control ${error ? "is-invalid" : ""}`}
+              value={value}
+              onChange={handleChange}
+            />
+            <label className="visually-hidden" htmlFor="name">{t('modals.channelModal.channelName')}</label>
+            { error ? (<div className="invalid-feedback">{error}</div>) : null}
+            <div className="d-flex justify-content-end">
+              <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.channelModal.cancel')}</button>
+              <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.sending')}
+              </button>
+            </div>
+          </div>
+        </form>
       </Modal.Body>
     </Modal>
   );
