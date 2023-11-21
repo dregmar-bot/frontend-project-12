@@ -5,25 +5,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import { switchChannel } from '../slices/currentChannel';
 import AddChannelModal from './modals/AddChannelModal';
 import RemoveChannelModal from './modals/RemoveChannelModal';
+import RenameChannelModal from './modals/RenameChannelModal';
 import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 
 
 const ChannelBox = () => {
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
-  const [removeModalIsOpen, setRemoveModalIsOpen] = useState(false);
   const [renameModalIsOpen, setRenameModalIsOpen] = useState(false);
-  const [editedChannel, setEditedChannel] = useState(null);
+  const [removeModalIsOpen, setRemoveModalIsOpen] = useState(false);
+  const [editingChannel, setEditingChannel] = useState(null);
 
   const handleCreateChannel = () => setAddModalIsOpen(true);
-  const closeAddModal = () => setAddModalIsOpen(false);
+
+  const handleRenameChannel = (e) => {
+    const parentLi = e.target.closest('li');
+    setEditingChannel(parentLi.id)
+    setRenameModalIsOpen(true);
+  }
+
   const handleRemoveChannel = (e) => {
     const parentLi = e.target.closest('li');
-    setEditedChannel(parentLi.id)
+    setEditingChannel(parentLi.id)
     setRemoveModalIsOpen(true);
   }
-  const closeRemoveModal = () => setRemoveModalIsOpen(false);
-  const handleRenameChannel = () => setRenameModalIsOpen(true);
+
+  const closeAddModal = () => setAddModalIsOpen(false);
   const closeRenameModal = () => setRenameModalIsOpen(false);
+  const closeRemoveModal = () => setRemoveModalIsOpen(false);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -85,7 +93,7 @@ const ChannelBox = () => {
 
           <Dropdown.Menu>
             <Dropdown.Item href="#" onClick={handleRemoveChannel}>{t('chatPage.channelBox.remove')}</Dropdown.Item>
-            <Dropdown.Item href="#">{t('chatPage.channelBox.rename')}</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={handleRenameChannel}>{t('chatPage.channelBox.rename')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </li>
@@ -109,7 +117,8 @@ const ChannelBox = () => {
       <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {list}
       </ul>
-      <RemoveChannelModal show={removeModalIsOpen} close={closeRemoveModal} id={editedChannel}/>
+      <RemoveChannelModal show={removeModalIsOpen} close={closeRemoveModal} id={editingChannel}/>
+      <RenameChannelModal show={renameModalIsOpen} close={closeRenameModal} id={editingChannel}/>
     </div>
   );
 };

@@ -4,5 +4,6 @@ export default createContext( {
   socket: {},
   sendMessage: () => {},
   addChannel: () => {},
+  renameChannel: () => {},
   removeChannel: () => {},
 });

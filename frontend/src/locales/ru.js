@@ -37,12 +37,13 @@ export default {
       channelNameIsDuplicated: 'Канал с таким именем уже создан',
     },
     modals: {
-      addChannelModal: {
-        addChannel: 'Добавить канал',
+      channelModal: {
+        add: 'Добавить канал',
+        rename: 'Переименовать канал',
         channelName: 'Имя канала',
         cancel: 'Отменить',
         submit: 'Отправить',
-        creating: 'Создание...',
+        sending: 'Отправка...',
       },
       removeChannelModal: {
         removeChannel: 'Удалить канал',

@@ -7,7 +7,7 @@ import UserProvider from './providers/UserProvider';
 import SocketProvider from './providers/SocketProvider';
 import { io } from 'socket.io-client';
 import messages, { addMessage } from "./slices/messages";
-import channels, { addChannel, removeChannel } from "./slices/channels";
+import channels, { addChannel, removeChannel, renameChannel } from "./slices/channels";
 import { configureStore } from '@reduxjs/toolkit';
 import currentChannel from './slices/currentChannel';
 import { Provider } from "react-redux";
@@ -31,6 +31,9 @@ const init = async () => {
   });
   socket.on('removeChannel', (payload) => {
     store.dispatch(removeChannel(payload));
+  });
+  socket.on('renameChannel', ({ id, ...changes}) => {
+    store.dispatch(renameChannel({ id, changes}));
   });
 
   const i18n = i18next.createInstance();

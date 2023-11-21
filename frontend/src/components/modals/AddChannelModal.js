@@ -14,7 +14,7 @@ const AddChannelModal = ({ show, close }) => {
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
   const { t } = useTranslation();
 
-  const addChannelSchema = Yup.object({
+  const channelNameSchema = Yup.object({
     name: Yup.string().test(
       'name is duplicated',
       `${t('yupErrors.channelNameIsDuplicated')}`,
@@ -25,12 +25,12 @@ const AddChannelModal = ({ show, close }) => {
   return (
     <Modal show={show} onHide={close} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{t('modals.addChannelModal.addChannel')}</Modal.Title>
+        <Modal.Title>{t(`modals.channelModal.add`)}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
           initialValues={{ name: ''}}
-          validationSchema={addChannelSchema}
+          validationSchema={channelNameSchema}
           onSubmit={({ name }) => {
             setLoading(true);
             try {
@@ -60,12 +60,12 @@ const AddChannelModal = ({ show, close }) => {
                   component="div"
                   className="invalid-feedback"
                 />
-                <label className="visually-hidden" htmlFor="name">{t('modals.addChannelModal.channelName')}</label>
+                <label className="visually-hidden" htmlFor="name">{t('modals.channelModal.channelName')}</label>
               </div>
               <div className="d-flex justify-content-end">
-                <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.addChannelModal.cancel')}</button>
+                <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.channelModal.cancel')}</button>
                 <button type="submit" className="btn btn-primary" disabled={isLoading}>
-                  {!isLoading ? t('modals.addChannelModal.submit') : t('modals.addChannelModal.creating')}
+                  {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.creating')}
                 </button>
               </div>
             </Form>
