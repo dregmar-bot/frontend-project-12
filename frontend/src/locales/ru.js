@@ -20,6 +20,15 @@ export default {
       youCanGo: 'Но вы можете перейти',
       toMainPage: 'на главную страницу',
     },
+    signupPage: {
+      signupCard: {
+        signup: 'Регистрация',
+        username: 'Имя пользователя',
+        password: 'Пароль',
+        register: 'Зарегистрироваться',
+        confirmPassword: 'Подтвердите пароль',
+      },
+    },
     chatPage: {
       channelBox: {
         channels: 'Каналы',
@@ -35,6 +44,16 @@ export default {
     },
     yupErrors: {
       channelNameIsDuplicated: 'Канал с таким именем уже создан',
+      minSymbols: {
+        key_one: 'Минимум {{count}} символ',
+        key_few: 'Минимум {{count}} символа',
+        key_many: 'Минимум {{count}} символов',
+      },
+      maxSymbols: {
+        key_one: 'Максимум {{count}} символ',
+        key_few: 'Максимум {{count}} символа',
+        key_many: 'Максимум {{count}} символов',
+      },
     },
     modals: {
       channelModal: {
