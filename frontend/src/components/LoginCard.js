@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../images/logo.png';
 import UserContext from '../contexts/userContext.js';
 import axios from "axios";
+import authorize from '../utilts/authorize';
 
 const LoginCardForm = () => {
   const navigate = useNavigate();
@@ -19,15 +20,12 @@ const LoginCardForm = () => {
       try {
         const response = await axios.post('/api/v1/login', { username, password })
         const { token } = response.data;
-        const activeUser = { username, password, token};
-        setUser(activeUser);
-        localStorage.userToken = token;
-        localStorage.username = username;
-        localStorage.userPassword = password;
+        const activeUser = { username, password, token };
+        authorize(activeUser, setUser);
         navigate('/');
       } catch (e) {
         setError(e.code);
-        console.log(error)
+        console.log(e)
       }
       }
     }
