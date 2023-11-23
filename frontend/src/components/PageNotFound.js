@@ -22,7 +22,7 @@ const PageNotFound = () => {
               <a href="/">{t('pageNotFound.toMainPage')}</a>
           </div>
         </div>
-        <div className="Toastify"></div>
+        <div></div>
       </div>
     </div>
   )
