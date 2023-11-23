@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { addMessages } from '../slices/messages';
 import { addChannels } from '../slices/channels';
@@ -10,11 +11,12 @@ import MessagesBox from './MessagesBox';
 
 
 const ChatPage = () => {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.userToken;
+    const { token } = JSON.parse(localStorage.getItem('activeUser'));
     if (!token) {
-      window.location.replace('/login');
+      navigate('/login');
     }
 
     const fetchData = async () => {
