@@ -9,6 +9,7 @@ import SocketContext from '../contexts/socketContext';
 
 const MessagesBox = () => {
   const [text, setText] = useState('');
+  const { t } = useTranslation();
   const { sendMessage } = useContext(SocketContext);
 
   const channelId = useSelector((state) => {
@@ -16,12 +17,14 @@ const MessagesBox = () => {
   });
   const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
   const messages = useSelector(messageSelectors.selectAll).filter((message) => message.channelId === channelId)
-  const { t } = useTranslation();
+
+  const user = JSON.parse(localStorage.getItem('activeUser'));
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      const message = { body: text, channelId, username: localStorage.username };
+      const message = { body: text, channelId, username: user.username };
       sendMessage(message);
       setText('');
     } catch(e) {
