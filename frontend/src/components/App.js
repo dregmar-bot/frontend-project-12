@@ -4,7 +4,8 @@ import React from 'react';
 import LoginPage from './LoginPage';
 import PageNotFound from './PageNotFound';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ChatPage from "./ChatPage";
+import ChatPage from './ChatPage';
+import SignupPage from './SignupPage';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path='*' element={<PageNotFound/>} />
         <Route path='/' element={<ChatPage/>} />
         <Route path='login' element={<LoginPage/>} />
+        <Route path='signup' element={<SignupPage/>} />
       </Routes>
     </BrowserRouter>
   );
