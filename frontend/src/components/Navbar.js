@@ -3,7 +3,7 @@ import userContext from '../contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-  const isAuthorized = () => !!localStorage.getItem('activeUser');
+  const isAuthorized = () => !!localStorage.getItem('token');
   const { setUser } = useContext(userContext);
   const navigate = useNavigate();
 
