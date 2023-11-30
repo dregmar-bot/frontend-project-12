@@ -1,11 +1,7 @@
 import React from 'react';
 import SocketContext from '../contexts/socketContext';
-import { useDispatch } from 'react-redux';
-import { switchChannel } from '../slices/currentChannel';
-
 
 const SocketProvider = ({ socket, children }) => {
-  const dispatch = useDispatch();
 
   const sendMessage = (message) => socket.emit('newMessage', message, (response) => {
     if (response.status !== 'ok') {
@@ -13,14 +9,7 @@ const SocketProvider = ({ socket, children }) => {
     }
   });
 
-  const addChannel = (channel) => socket.emit('newChannel', channel, (response) => {
-    if (response.status === 'ok') {
-      const { id } = response.data;
-      dispatch(switchChannel(id));
-    } else {
-      throw new Error('Your channel was not created');
-    }
-  });
+  const addChannel = async (channel) => await socket.timeout(5000).emitWithAck('newChannel', channel);
 
   const renameChannel = (id, name) => socket.emit('renameChannel', { id, name}, (response) => {
     if (response.status !== 'ok') {
