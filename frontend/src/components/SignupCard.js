@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
+import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import signup from '../images/signup.png';
@@ -38,7 +39,17 @@ const SignupCardForm = () => {
         authorize(activeUser, setUser);
         navigate('/');
       } catch (e) {
-        console.log(e.message);
+        switch (e.code) {
+          case 'ERR_NETWORK' :
+            toast.error(t(`signupPage.errors.${e.code}`));
+            break;
+          case 'ERR_BAD_REQUEST':
+            toast.error(t(`signupPage.errors.${e.code}`));
+            break;
+          default:
+            toast.error(t(`signupPage.errors.unknownError`));
+        }
+        console.log(e);
       }
       setSubmitting(false);
     }}
@@ -126,6 +137,7 @@ const SignupCardBody = () => {
 const SignupCard = () => (
   <div className="card shadow-sm">
     <SignupCardBody />
+    <ToastContainer/>
   </div>
 )
 

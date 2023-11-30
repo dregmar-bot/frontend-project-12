@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { channelsSelectors } from '../../slices/channels';
 import { Modal } from 'react-bootstrap';
 import SocketContext from '../../contexts/socketContext';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const RenameChannelModal = ({ show, close,  id}) => {
@@ -33,6 +34,7 @@ const RenameChannelModal = ({ show, close,  id}) => {
       .then(() => {
       renameChannel(id, name);
       setLoading(false);
+      toast.success(t('modals.toast.rename'));
       setValue('');
       close();
       }).catch((e) => {
@@ -50,33 +52,36 @@ const RenameChannelModal = ({ show, close,  id}) => {
   }, [show])
 
   return (
-    <Modal show={show} onHide={close} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>{t(`modals.channelModal.rename`)}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              ref={inputEl}
-              name="name"
-              id="new-name"
-              className={`mb-2 form-control ${error ? "is-invalid" : ""}`}
-              value={value}
-              onChange={handleChange}
-            />
-            <label className="visually-hidden" htmlFor="new-name">{t('modals.channelModal.channelName')}</label>
-            { error ? (<div className="invalid-feedback">{error}</div>) : null}
-            <div className="d-flex justify-content-end">
-              <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.channelModal.cancel')}</button>
-              <button type="submit" className="btn btn-primary" disabled={isLoading}>
-                {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.sending')}
-              </button>
+    <div>
+      <Modal show={show} onHide={close} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{t(`modals.channelModal.rename`)}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input
+                ref={inputEl}
+                name="name"
+                id="new-name"
+                className={`mb-2 form-control ${error ? "is-invalid" : ""}`}
+                value={value}
+                onChange={handleChange}
+              />
+              <label className="visually-hidden" htmlFor="new-name">{t('modals.channelModal.channelName')}</label>
+              { error ? (<div className="invalid-feedback">{error}</div>) : null}
+              <div className="d-flex justify-content-end">
+                <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.channelModal.cancel')}</button>
+                <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                  {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.sending')}
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
-      </Modal.Body>
-    </Modal>
+          </form>
+        </Modal.Body>
+      </Modal>
+      <ToastContainer/>
+    </div>
   );
 };
 

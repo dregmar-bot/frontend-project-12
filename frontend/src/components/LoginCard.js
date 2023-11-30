@@ -6,6 +6,7 @@ import logo from '../images/logo.png';
 import UserContext from '../contexts/userContext.js';
 import axios from "axios";
 import authorize from '../utilts/authorize';
+import {toast, ToastContainer } from 'react-toastify';
 
 const LoginCardForm = () => {
   const navigate = useNavigate();
@@ -24,8 +25,16 @@ const LoginCardForm = () => {
         authorize(activeUser, setUser);
         navigate('/');
       } catch (e) {
-        setError(e.code);
-        console.log(e)
+        switch (e.code) {
+          case 'ERR_BAD_REQUEST':
+            setError(e.code);
+            break;
+          case 'ERR_NETWORK' :
+            toast.error(t(`loginPage.errors.${e.code}`));
+            break;
+          default:
+            toast.error(t(`loginPage.errors.unknownError`));
+        }
       }
       }
     }
@@ -101,6 +110,7 @@ const LoginCard = () => (
   <div className="card shadow-sm">
     <LoginCardBody />
     <LoginCardFooter />
+    <ToastContainer/>
   </div>
 )
 
