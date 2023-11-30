@@ -12,13 +12,18 @@ import MessagesBox from './MessagesBox';
 
 const ChatPage = () => {
   const navigate = useNavigate();
+  const [_error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    const { token } = JSON.parse(localStorage.getItem('activeUser'));
     if (!token) {
       navigate('/login');
     }
+  })
 
+  if (token) {
+    const { token  } = localStorage;
     const fetchData = async () => {
       const response = await axios.get('api/v1/data', {
         headers: {
@@ -35,24 +40,21 @@ const ChatPage = () => {
     } catch (e) {
       setError(e.code);
     }
-  })
 
-  const [_error, setError] = useState(null);
-  const dispatch = useDispatch();
-
-  return (
-    <div className="h-100" id="chat">
-      <Navbar/>
-      <div className="container h-100 my-4 overflow-hidden rounded shadow">
-        <div className="row h-100 bg-white flex-md-row">
-          <ChannelBox/>
-          <div className="col p-0 h-100">
-            <MessagesBox/>
+    return (
+      <div className="h-100" id="chat">
+        <Navbar/>
+        <div className="container h-100 my-4 overflow-hidden rounded shadow">
+          <div className="row h-100 bg-white flex-md-row">
+            <ChannelBox/>
+            <div className="col p-0 h-100">
+              <MessagesBox/>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default ChatPage;
