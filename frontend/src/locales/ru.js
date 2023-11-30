@@ -12,7 +12,8 @@ export default {
       },
       errors: {
         ERR_BAD_REQUEST: 'Неверные имя пользователя или пароль',
-        ERR_BAD_RESPONSE: 'Ошибка сети. Попробуйте позже',
+        ERR_NETWORK: 'Ошибка сети',
+        unknownError: 'Неизвестная ошибка. Повторите позднее',
       }
     },
     pageNotFound: {
@@ -28,6 +29,11 @@ export default {
         register: 'Зарегистрироваться',
         confirmPassword: 'Подтвердите пароль',
       },
+      errors: {
+        ERR_BAD_REQUEST: 'Пользователь с таким именем уже зарегистрирован',
+        ERR_NETWORK: 'Ошибка сети',
+        unknownError: 'Неизвестная ошибка. Повторите позднее',
+      }
     },
     chatPage: {
       channelBox: {
@@ -69,6 +75,12 @@ export default {
         areYouSure: 'Вы уверены?',
         remove: 'Удалить',
         cancel: 'Отменить',
+      },
+      toast: {
+        add: 'Канал успешно создан',
+        remove: 'Канал успешно удален',
+        rename: 'Канал успешно переименован',
+        unknownError: 'Произошла ошибка. Повторите позднее',
       }
     },
   },
