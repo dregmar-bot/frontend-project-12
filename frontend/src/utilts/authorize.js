@@ -1,7 +1,10 @@
 
 const authorize = (user, cb) => {
   cb(user);
-  localStorage.activeUser = JSON.stringify(user);
+  const { username, password, token } = user;
+  localStorage.setItem('username', username);
+  localStorage.setItem('password', password);
+  localStorage.setItem('token', token);
 }
 
 export default authorize;
