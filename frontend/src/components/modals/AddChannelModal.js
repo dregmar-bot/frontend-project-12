@@ -31,7 +31,7 @@ const AddChannelModal = ({ show, close }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    const name = new FormData(e.target).get('name');
+    const name = value;
     channelNameSchema.validate({ name })
     .then(async () => {
       const { status, data } = await addChannel({ name });
@@ -41,11 +41,10 @@ const AddChannelModal = ({ show, close }) => {
         dispatch(switchChannel(data.id));
         close();
       } else {
-        toast.success(t('modals.toast.unknownError'));
+        toast.error(t('modals.toast.unknownError'));
       }
-    }).catch((e) => {
-      console.log(e)
-      setError(e.message);
+    }).catch(() => {
+      setError(t('socketErrors.timeout'));
       setLoading(false);
     })
   }
