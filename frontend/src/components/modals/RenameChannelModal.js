@@ -29,14 +29,18 @@ const RenameChannelModal = ({ show, close,  id}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    const name = new FormData(e.target).get('name');
+    const name = value;
     channelNameSchema.validate({ name })
-      .then(() => {
-      renameChannel(id, name);
-      setLoading(false);
-      toast.success(t('modals.toast.rename'));
-      setValue('');
-      close();
+      .then(async () => {
+        const { status } = await renameChannel(id, name);
+        if(status === 'ok') {
+          setLoading(false);
+          toast.success(t('modals.toast.rename'));
+          setValue('');
+          close();
+        } else {
+        toast.error(t('modals.toast.unknownError'));
+        }
       }).catch((e) => {
       setError(e.message);
       setLoading(false);
