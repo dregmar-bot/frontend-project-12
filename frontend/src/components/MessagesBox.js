@@ -5,6 +5,7 @@ import { messageSelectors } from '../slices/messages';
 import { channelsSelectors } from '../slices/channels';
 import { useSelector } from 'react-redux';
 import SocketContext from '../contexts/socketContext';
+import { toast } from 'react-toastify';
 
 
 const MessagesBox = () => {
@@ -18,17 +19,21 @@ const MessagesBox = () => {
   const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
   const messages = useSelector(messageSelectors.selectAll).filter((message) => message.channelId === channelId)
 
-  const user = JSON.parse(localStorage.getItem('activeUser'));
+  const username = localStorage.getItem('username');
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const message = { body: text, channelId, username: user.username };
-      sendMessage(message);
-      setText('');
-    } catch(e) {
-      console.log(e);
+      const message = { body: text, channelId, username };
+      const { status } = await sendMessage(message);
+      if (status !== 'ok') {
+        toast.error(t('modals.toast.unknownError'));
+      } else {
+        setText('');
+      }
+    } catch {
+      toast.error(t('socketErrors.timeout'));
     }
   };
 
