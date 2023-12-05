@@ -9,15 +9,19 @@ const RemoveChannelModal = ({ show, close, id }) => {
   const { removeChannel } = useContext(SocketContext);
   const { t } = useTranslation();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
     try {
-      removeChannel(id);
-      setLoading(false);
-      toast.success(t('modals.toast.remove'));
-      close()
-    } catch(e) {
-      console.log(e);
+      const { status } = await removeChannel(id);
+      if (status === 'ok') {
+        toast.success(t('modals.toast.remove'));
+        setLoading(false);
+        close();
+      } else {
+        toast.error(t('modals.toast.unknownError'));
+      }
+    } catch {
+      toast.error(t('socketErrors.timeout'));
     }
   };
 
