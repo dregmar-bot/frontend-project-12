@@ -24,11 +24,6 @@ const init = async () => {
     },
   });
 
-  function TestError() {
-    const a = null;
-    return a.hello();
-  }
-
   const rollbarConfig = {
     accessToken: '8ff6c781a3f34e929555c77e574d125e',
     environment: 'testenv',
@@ -68,7 +63,6 @@ const init = async () => {
           <UserProvider>
             <StoreProvider store={store}>
               <SocketProvider socket={socket}>
-                <TestError />
                 <App />
               </SocketProvider>
             </StoreProvider>
