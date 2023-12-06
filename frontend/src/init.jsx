@@ -10,7 +10,9 @@ import messages, { addMessage } from "./slices/messages";
 import channels, { addChannel, removeChannel, renameChannel } from "./slices/channels";
 import { configureStore } from '@reduxjs/toolkit';
 import currentChannel from './slices/currentChannel';
-import { Provider } from "react-redux";
+import { Provider as StoreProvider } from "react-redux";
+import filter from 'leo-profanity';
+import { Provider, ErrorBoundary} from '@rollbar/react';
 
 
 const init = async () => {
@@ -21,6 +23,28 @@ const init = async () => {
       currentChannel,
     },
   });
+
+  function TestError() {
+    const a = null;
+    return a.hello();
+  }
+
+  const rollbarConfig = {
+    accessToken: '9af852bc26a741858ba015403bffe31a',
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    environment: 'production',
+    server: {
+      root: "http://example.com/",
+      branch: "main"
+    },
+    code_version: "0.13.7",
+    person: {
+      id: 117,
+      email: "chief@unsc.gov",
+      username: "john-halo"
+    }
+  }
 
   const socket = io();
   socket.on('newMessage', (payload) => {
@@ -38,25 +62,32 @@ const init = async () => {
 
   const i18n = i18next.createInstance();
   await i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    fallbackLng: 'ru',
-    interpolation: {
-      escapeValue: false
-    },
-  });
+    .use(initReactI18next)
+    .init({
+      resources,
+      fallbackLng: 'ru',
+      interpolation: {
+        escapeValue: false
+      },
+    });
+
+  filter.add(filter.getDictionary('ru'));
 
   return (
-    <React.StrictMode>
-      <UserProvider>
-        <Provider store={store}>
-          <SocketProvider socket={socket}>
-            <App />
-          </SocketProvider>
-        </Provider>
-      </UserProvider>
-    </React.StrictMode>
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        <React.StrictMode>
+          <UserProvider>
+            <StoreProvider store={store}>
+              <SocketProvider socket={socket}>
+                <TestError />
+                <App />
+              </SocketProvider>
+            </StoreProvider>
+          </UserProvider>
+        </React.StrictMode>
+      </ErrorBoundary>
+    </Provider>
   );
 };
 
