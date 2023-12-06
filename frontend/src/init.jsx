@@ -30,21 +30,9 @@ const init = async () => {
   }
 
   const rollbarConfig = {
-    accessToken: '9af852bc26a741858ba015403bffe31a',
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-    environment: 'production',
-    server: {
-      root: "http://example.com/",
-      branch: "main"
-    },
-    code_version: "0.13.7",
-    person: {
-      id: 117,
-      email: "chief@unsc.gov",
-      username: "john-halo"
-    }
-  }
+    accessToken: '3fcde562382a4dd79620252715b87eb4',
+    environment: 'testenv',
+  };
 
   const socket = io();
   socket.on('newMessage', (payload) => {
