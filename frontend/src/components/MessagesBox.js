@@ -6,6 +6,7 @@ import { channelsSelectors } from '../slices/channels';
 import { useSelector } from 'react-redux';
 import SocketContext from '../contexts/socketContext';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 
 
 const MessagesBox = () => {
@@ -47,7 +48,7 @@ const MessagesBox = () => {
       <div className="text-break mb-2" key={message.id}>
         <b>{message.username}</b>
         <>: </>
-        {message.body}
+        {filter.clean(message.body)}
       </div>
     ));
 

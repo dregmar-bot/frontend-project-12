@@ -7,7 +7,7 @@ import AddChannelModal from './modals/AddChannelModal';
 import RemoveChannelModal from './modals/RemoveChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
 import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
-
+import filter from 'leo-profanity';
 
 const ChannelBox = () => {
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
@@ -42,6 +42,7 @@ const ChannelBox = () => {
 
   const list = channels.map((channel) => {
     const handleSwitchChannel = () => dispatch(switchChannel(channel.id));
+    const name = filter.clean(channel.name);
     if (!channel.removable) {
       return (
         <li className="nav-item w-100" key={channel.id} id={channel.id}>
@@ -55,7 +56,7 @@ const ChannelBox = () => {
                   `}
                   onClick={handleSwitchChannel}
           >
-            <span  className="me-1"># {channel.name}</span>
+            <span  className="me-1"># {name}</span>
           </button>
         </li>
       )
@@ -75,7 +76,7 @@ const ChannelBox = () => {
                   `}
                   onClick={handleSwitchChannel}
           >
-            <span  className="me-1"># {channel.name}</span>
+            <span  className="me-1"># {name}</span>
           </button>
           <Dropdown.Toggle
             as="button"
