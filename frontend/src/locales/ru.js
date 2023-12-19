@@ -1,4 +1,4 @@
-export default {
+const ru = {
   translation: {
     loginPage: {
       loginForm: {
@@ -31,8 +31,8 @@ export default {
       },
       errors: {
         ERR_BAD_REQUEST: 'Пользователь с таким именем уже зарегистрирован',
-        ERR_NETWORK: 'Ошибка сети',
-        unknownError: 'Неизвестная ошибка. Повторите позднее',
+        ERR_NETWORK: 'Ошибка соединения',
+        unknownError: 'Ошибка соединения',
       }
     },
     chatPage: {
@@ -47,18 +47,22 @@ export default {
         key_few: '{{count}} сообщения',
         key_many: '{{count}} сообщений',
       },
+      toast: {
+        fetchError: 'Ошибка соединения'
+      }
     },
     yupErrors: {
       channelNameIsDuplicated: 'Канал с таким именем уже создан',
+      channelNameLength: 'От 3 до 20 символов',
       minSymbols: {
-        key_one: 'Минимум {{count}} символ',
-        key_few: 'Минимум {{count}} символа',
-        key_many: 'Минимум {{count}} символов',
+        key_one: 'Не менее {{count}} символ',
+        key_few: 'Не менее {{count}} символа',
+        key_many: 'Не менее {{count}} символов',
       },
       maxSymbols: {
-        key_one: 'Максимум {{count}} символ',
-        key_few: 'Максимум {{count}} символа',
-        key_many: 'Максимум {{count}} символов',
+        key_one: 'Не более {{count}} символ',
+        key_few: 'Не более {{count}} символа',
+        key_many: 'Не более {{count}} символов',
       },
     },
     modals: {
@@ -77,10 +81,10 @@ export default {
         cancel: 'Отменить',
       },
       toast: {
-        add: 'Канал успешно создан',
-        remove: 'Канал успешно удален',
-        rename: 'Канал успешно переименован',
-        unknownError: 'Произошла ошибка. Повторите позднее',
+        add: 'Канал создан',
+        remove: 'Канал удален',
+        rename: 'Канал переименован',
+        unknownError: 'Ошибка соединения',
       },
     },
     socketErrors: {
@@ -88,3 +92,5 @@ export default {
     },
   },
 };
+
+export default ru;
