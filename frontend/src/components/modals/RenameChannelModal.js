@@ -19,16 +19,13 @@ const RenameChannelModal = ({ show, close,  id}) => {
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
-    .test(
-      'name is duplicated',
-      `${t('yupErrors.channelNameIsDuplicated')}`,
-      (value) => !channelNames.includes(value),
-    )
-    .test(
-      'from 3 to 20 characters',
-      `${t('yupErrors.channelNameLength')}`,
-      (value) => 3 <= value.length && value.length <= 20,
-    ),
+      .test(
+        'name is duplicated',
+        `${t('yupErrors.channelNameIsDuplicated')}`,
+        (value) => !channelNames.includes(value),
+      )
+      .min(3, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`)
+      .max(20, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`),
   });
 
   const handleChange = (e) => setValue(e.target.value);
