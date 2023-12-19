@@ -66,31 +66,19 @@ const ChannelBox = () => {
       <li className="nav-item w-100" key={channel.id} id={channel.id}>
         <Dropdown as={ButtonGroup} className="d-flex" key={channel.id}>
           <button type="button"
-                  className={`
-                  w-100 
-                  rounded-0
-                  text-start
-                  text-truncate
-                  btn
-                  ${channel.id === channelId ? "btn-secondary" : ""}
-                  `}
+                  className={`w-100 rounded-0 text-start text-truncate btn ${channel.id === channelId ? "btn-secondary" : ""}`}
                   onClick={handleSwitchChannel}
           >
             <span  className="me-1"># {name}</span>
           </button>
           <Dropdown.Toggle
+            type="button"
             as="button"
             split variant="light"
-            id="dropdown-split-basic"
-            className={`
-                    btn                  
-                    flex-grow-0
-                    dropdown-toggle 
-                    dropdown-toggle-split 
-                    btn
-                    ${channel.id === channelId ? "btn-secondary" : ""}
-                  `}
-          />
+            className={`btn flex-grow-0 ${channel.id === channelId ? "btn-secondary" : ""}`}
+          >
+            <span className='visually-hidden'>Управление каналом</span>
+          </Dropdown.Toggle>
 
           <Dropdown.Menu>
             <Dropdown.Item href="#" onClick={handleRemoveChannel}>{t('chatPage.channelBox.remove')}</Dropdown.Item>
