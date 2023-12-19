@@ -18,10 +18,16 @@ const RenameChannelModal = ({ show, close,  id}) => {
   const { t } = useTranslation();
 
   const channelNameSchema = Yup.object({
-    name: Yup.string().test(
+    name: Yup.string()
+    .test(
       'name is duplicated',
       `${t('yupErrors.channelNameIsDuplicated')}`,
       (value) => !channelNames.includes(value),
+    )
+    .test(
+      'from 3 to 20 characters',
+      `${t('yupErrors.channelNameLength')}`,
+      (value) => 3 <= value.length && value.length <= 20,
     ),
   });
 
@@ -41,8 +47,9 @@ const RenameChannelModal = ({ show, close,  id}) => {
         } else {
         toast.error(t('modals.toast.unknownError'));
         }
-      }).catch((e) => {
-      setError(e.message);
+      }).catch((error) => {
+      const errorMessage = error.name === 'ValidationError' ? error.message : t('socketErrors.timeout');
+      setError(errorMessage);
       setLoading(false);
       })
   }
