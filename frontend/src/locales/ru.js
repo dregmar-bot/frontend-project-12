@@ -59,6 +59,8 @@ const ru = {
         key_few: 'до {{count}} символов',
         key_many: 'до {{count}} символов',
       },
+      passwordLengthMin: 'Не менее 6 символов',
+      passwordLengthMax: 'Не более 50 символов',
       passwordMismatch: 'Пароли не совпадают',
     },
     modals: {
