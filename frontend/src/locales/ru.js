@@ -61,7 +61,7 @@ const ru = {
       },
       passwordLengthMin: 'Не менее 6 символов',
       passwordLengthMax: 'Не более 50 символов',
-      passwordMismatch: 'Пароли не совпадают',
+      passwordMismatch: 'Пароли должны совпадать',
     },
     modals: {
       channelModal: {
