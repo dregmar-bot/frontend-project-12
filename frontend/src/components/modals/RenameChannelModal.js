@@ -1,14 +1,15 @@
-import React, {useState, useContext, useEffect, useRef } from 'react';
+import React, {
+  useState, useContext, useEffect, useRef
+} from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { channelsSelectors } from '../../slices/channels';
-import { Modal } from 'react-bootstrap';
 import SocketContext from '../../contexts/socketContext';
-import { toast } from 'react-toastify';
 
-
-const RenameChannelModal = ({ show, close,  id}) => {
+const RenameChannelModal = ({ show, close, id }) => {
   const [isLoading, setLoading] = useState(false);
   const [value, setValue] = useState('');
   const [error, setError] = useState(null);
@@ -22,7 +23,7 @@ const RenameChannelModal = ({ show, close,  id}) => {
       .test(
         'name is duplicated',
         `${t('yupErrors.channelNameIsDuplicated')}`,
-        (value) => !channelNames.includes(value),
+        (name) => !channelNames.includes(name),
       )
       .min(3, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`)
       .max(20, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`),
@@ -36,34 +37,34 @@ const RenameChannelModal = ({ show, close,  id}) => {
     channelNameSchema.validate({ name })
       .then(async () => {
         const { status } = await renameChannel(id, name);
-        if(status === 'ok') {
+        if (status === 'ok') {
           setLoading(false);
           toast.success(t('modals.toast.rename'));
           setValue('');
           close();
         } else {
-        toast.error(t('modals.toast.unknownError'));
+         toast.error(t('modals.toast.unknownError'));
         }
-      }).catch((error) => {
-      const errorMessage = error.name === 'ValidationError' ? error.message : t('socketErrors.timeout');
-      setError(errorMessage);
-      setLoading(false);
-      })
-  }
+      }).catch((e) => {
+       const errorMessage = e.name === 'ValidationError' ? e.message : t('socketErrors.timeout');
+       setError(errorMessage);
+       setLoading(false);
+      });
+  };
 
-  useEffect(() =>{
+  useEffect(() => {
     setError(null);
     setValue('');
     if (inputEl.current) {
       inputEl.current.focus();
     }
-  }, [show])
+  }, [show]);
 
   return (
     <div>
       <Modal show={show} onHide={close} centered>
         <Modal.Header closeButton>
-          <Modal.Title>{t(`modals.channelModal.rename`)}</Modal.Title>
+          <Modal.Title>{t('modals.channelModal.rename')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
@@ -72,7 +73,7 @@ const RenameChannelModal = ({ show, close,  id}) => {
                 ref={inputEl}
                 name="name"
                 id="new-name"
-                className={`mb-2 form-control ${error ? "is-invalid" : ""}`}
+                className={`mb-2 form-control ${error ? 'is-invalid' : ''}`}
                 value={value}
                 onChange={handleChange}
               />

@@ -2,15 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import axios from "axios";
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 import { addMessages } from '../slices/messages';
 import { addChannels } from '../slices/channels';
 import { switchChannel } from '../slices/currentChannel';
 import Navbar from './Navbar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
-import { toast, ToastContainer } from 'react-toastify';
-
 
 const ChatPage = () => {
   const { t } = useTranslation();
@@ -22,7 +21,7 @@ const ChatPage = () => {
     if (!token) {
       navigate('/login');
     }
-  })
+  });
 
   if (token) {
     const fetchData = async () => {
@@ -44,16 +43,16 @@ const ChatPage = () => {
 
     return (
       <div className="h-100 d-flex flex-column" id="chat">
-        <Navbar/>
+        <Navbar />
         <div className="container h-100 my-4 overflow-hidden rounded shadow">
           <div className="row h-100 bg-white flex-md-row">
-            <ChannelBox/>
+            <ChannelBox />
             <div className="col p-0 h-100">
-              <MessagesBox/>
+              <MessagesBox />
             </div>
           </div>
         </div>
-        <ToastContainer/>
+        <ToastContainer />
       </div>
     );
   }

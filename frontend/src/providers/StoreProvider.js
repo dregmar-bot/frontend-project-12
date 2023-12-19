@@ -1,9 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from '../slices/index.js'
 
-
-const StoreProvider = ({ children }) => (
+const StoreProvider = ({ children, store }) => (
   <Provider store={store}>
     {children}
   </Provider>

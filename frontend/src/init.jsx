@@ -1,18 +1,20 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import ru from './locales/ru';
 import React from 'react';
+import { Provider as StoreProvider } from 'react-redux';
+import filter from 'leo-profanity';
+import { Provider, ErrorBoundary} from '@rollbar/react';
+import { configureStore } from '@reduxjs/toolkit';
+import { io } from 'socket.io-client';
+import ru from './locales/ru';
 import App from './components/App';
 import UserProvider from './providers/UserProvider';
 import SocketProvider from './providers/SocketProvider';
-import { io } from 'socket.io-client';
-import messages, { addMessage } from "./slices/messages";
-import channels, { addChannel, removeChannel, renameChannel } from "./slices/channels";
-import { configureStore } from '@reduxjs/toolkit';
+import messages, { addMessage } from './slices/messages';
+import channels, {
+  addChannel, removeChannel, renameChannel
+} from './slices/channels';
 import currentChannel from './slices/currentChannel';
-import { Provider as StoreProvider } from "react-redux";
-import filter from 'leo-profanity';
-import { Provider, ErrorBoundary} from '@rollbar/react';
 
 
 const init = async () => {
@@ -40,7 +42,7 @@ const init = async () => {
     store.dispatch(removeChannel(id));
   });
   socket.on('renameChannel', ({ id, ...changes}) => {
-    store.dispatch(renameChannel({ id, changes}));
+    store.dispatch(renameChannel({ id, changes }));
   });
 
   const i18n = i18next.createInstance();
@@ -76,4 +78,3 @@ const init = async () => {
 };
 
 export default init;
-

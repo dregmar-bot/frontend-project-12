@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import LoginCard from "./LoginCard";
-import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
+import LoginCard from './LoginCard';
+import Navbar from './Navbar';
 
 const LoginPage = () => {
   const token = localStorage.getItem('token');
@@ -10,7 +10,7 @@ const LoginPage = () => {
     if (token) {
       navigate('/');
     }
-  })
+  });
   return (
     <div className="h-100">
       <div className="h-100" id="chat">
@@ -24,11 +24,10 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-        <div className="Toastify"></div>
+        <div className="Toastify" />
       </div>
     </div>
   );
 };
 
 export default LoginPage;
-

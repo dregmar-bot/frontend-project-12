@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
+import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { channelsSelectors } from '../slices/channels';
-import { useSelector, useDispatch } from 'react-redux';
 import { switchChannel } from '../slices/currentChannel';
 import AddChannelModal from './modals/AddChannelModal';
 import RemoveChannelModal from './modals/RemoveChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
-import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
-import filter from 'leo-profanity';
 
 const ChannelBox = () => {
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
@@ -19,15 +19,15 @@ const ChannelBox = () => {
 
   const handleRenameChannel = (e) => {
     const parentLi = e.target.closest('li');
-    setEditingChannel(parentLi.id)
+    setEditingChannel(parentLi.id);
     setRenameModalIsOpen(true);
-  }
+  };
 
   const handleRemoveChannel = (e) => {
     const parentLi = e.target.closest('li');
-    setEditingChannel(parentLi.id)
+    setEditingChannel(parentLi.id);
     setRemoveModalIsOpen(true);
-  }
+  };
 
   const closeAddModal = () => setAddModalIsOpen(false);
   const closeRenameModal = () => setRenameModalIsOpen(false);
@@ -35,9 +35,7 @@ const ChannelBox = () => {
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const channelId = useSelector((state) => {
-    return state.currentChannel;
-  });
+  const channelId = useSelector((state) => state.currentChannel);
   const channels = useSelector(channelsSelectors.selectAll);
 
   const list = channels.map((channel) => {
@@ -46,15 +44,10 @@ const ChannelBox = () => {
     if (!channel.removable) {
       return (
         <li className="nav-item w-100" key={channel.id} id={channel.id}>
-          <button type="button" className={`
-                  w-100 
-                  rounded-0
-                  text-start
-                  text-truncate
-                  btn
-                  ${channel.id === channelId ? "btn-secondary" : ""}
-                  `}
-                  onClick={handleSwitchChannel}
+          <button
+            type="button"
+            className={`w-100 rounded-0 text-start text-truncate btn ${channel.id === channelId ? "btn-secondary" : ""}`}
+            onClick={handleSwitchChannel}
           >
             <span  className="me-1"># {name}</span>
           </button>
@@ -65,11 +58,12 @@ const ChannelBox = () => {
     return (
       <li className="nav-item w-100" key={channel.id} id={channel.id}>
         <Dropdown as={ButtonGroup} className="d-flex" key={channel.id}>
-          <button type="button"
-                  className={`w-100 rounded-0 text-start text-truncate btn ${channel.id === channelId ? "btn-secondary" : ""}`}
-                  onClick={handleSwitchChannel}
+          <button
+            type="button"
+            className={`w-100 rounded-0 text-start text-truncate btn ${channel.id === channelId ? "btn-secondary" : ""}`}
+            onClick={handleSwitchChannel}
           >
-            <span  className="me-1"># {name}</span>
+            <span className="me-1"># {name}</span>
           </button>
           <Dropdown.Toggle
             type="button"

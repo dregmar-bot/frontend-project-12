@@ -14,7 +14,7 @@ const ru = {
         ERR_BAD_REQUEST: 'Неверные имя пользователя или пароль',
         ERR_NETWORK: 'Ошибка сети',
         unknownError: 'Неизвестная ошибка. Повторите позднее',
-      }
+      },
     },
     pageNotFound: {
       pageNotFound: 'Страница не найдена',
@@ -33,7 +33,7 @@ const ru = {
         ERR_BAD_REQUEST: 'Пользователь с таким именем уже зарегистрирован',
         ERR_NETWORK: 'Ошибка соединения',
         unknownError: 'Ошибка соединения',
-      }
+      },
     },
     chatPage: {
       channelBox: {
@@ -48,8 +48,8 @@ const ru = {
         key_many: '{{count}} сообщений',
       },
       toast: {
-        fetchError: 'Ошибка соединения'
-      }
+        fetchError: 'Ошибка соединения',
+      },
     },
     yupErrors: {
       channelNameIsDuplicated: 'Канал с таким именем уже создан',

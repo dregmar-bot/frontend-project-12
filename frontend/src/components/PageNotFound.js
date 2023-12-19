@@ -1,8 +1,7 @@
-import Navbar from './Navbar';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import Navbar from './Navbar';
 import pageNotFound from '../images/404.png';
-
 
 const PageNotFound = () => {
   const { t } = useTranslation();
@@ -22,10 +21,10 @@ const PageNotFound = () => {
               <a href="/">{t('pageNotFound.toMainPage')}</a>
           </div>
         </div>
-        <div></div>
+        <div />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default PageNotFound;
