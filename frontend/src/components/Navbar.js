@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <a className="navbar-brand" href="/">Goossenger</a>
+        <a className="navbar-brand" href="/">Hexlet Chat</a>
         { isAuthorized() ? <button type="button" className="btn btn-primary" onClick={handleUnauthorize}>Выйти</button> : null}
       </div>
     </nav>
