@@ -9,7 +9,7 @@ import { switchChannel } from '../slices/currentChannel';
 import Navbar from './Navbar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 const ChatPage = () => {
@@ -53,7 +53,7 @@ const ChatPage = () => {
             </div>
           </div>
         </div>
-        <div className="Toastify"></div>
+        <ToastContainer/>
       </div>
     );
   }
