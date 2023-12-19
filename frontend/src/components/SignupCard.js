@@ -20,8 +20,8 @@ const SignupCardForm = () => {
       .min(3, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`)
       .max(20, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`),
     password: Yup.string()
-      .min(6, `${t('yupErrors.minSymbols', { count: 6 })} ${t('yupErrors.maxSymbols.key', { count: 50 })}`)
-      .max(50, `${t('yupErrors.minSymbols', { count: 6 })} ${t('yupErrors.maxSymbols.key', { count: 50 })}`),
+      .min(6, `${t('yupErrors.passwordLengthMin')}`)
+      .max(50, `${t('yupErrors.passwordLengthMax')}`),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], `${t('yupErrors.passwordMismatch')}`),
   });
