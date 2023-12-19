@@ -18,7 +18,7 @@ const PageNotFound = () => {
             />
             <h1 className="h4 text-muted">{t('pageNotFound.pageNotFound')}</h1>
             <p className="text-muted">{t('pageNotFound.youCanGo')}</p>
-              <a href="/">{t('pageNotFound.toMainPage')}</a>
+            <a href="/">{t('pageNotFound.toMainPage')}</a>
           </div>
         </div>
         <div />

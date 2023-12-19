@@ -8,7 +8,9 @@ const SocketProvider = ({ socket, children }) => {
   const removeChannel = (id) => socket.timeout(5000).emitWithAck('removeChannel', { id });
 
   return (
-    <SocketContext.Provider value={{ sendMessage, addChannel, removeChannel, renameChannel }}>
+    <SocketContext.Provider value={{
+      sendMessage, addChannel, removeChannel, renameChannel
+    }}>
       { children }
     </SocketContext.Provider>
   );

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Field, Form, Formik, ErrorMessage
+  Field, Form, Formik, ErrorMessage,
 } from 'formik';
 import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
@@ -95,7 +95,7 @@ const SignupCardForm = () => {
             />
           </div>
           <div className="form-floating mb-4">
-            <Field
+            <Field>
               type="password"
               name="confirmPassword"
               required
@@ -103,7 +103,7 @@ const SignupCardForm = () => {
               placeholder={t('signupPage.signupCard.password')}
               id="confirmPassword"
               className={`form-control ${errors.confirmPassword && touched.password ? 'is-invalid' : ''}`}
-              />
+            </Field>
             <label htmlFor="confirmPassword" className="form-label">{t('signupPage.signupCard.confirmPassword')}</label>
             <ErrorMessage
               component="div"

@@ -1,5 +1,5 @@
 import React, {
-  useState, useContext, useEffect, useRef
+  useState, useContext, useEffect, useRef,
 } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -47,8 +47,8 @@ const AddChannelModal = ({ show, close }) => {
         } else {
           toast.error(t('modals.toast.unknownError'));
         }
-      }).catch((e) => {
-        const errorMessage = e.name === 'ValidationError' ? e.message : t('socketErrors.timeout');
+      }).catch((err) => {
+        const errorMessage = err.name === 'ValidationError' ? err.message : t('socketErrors.timeout');
         setError(errorMessage);
         setLoading(false);
       });

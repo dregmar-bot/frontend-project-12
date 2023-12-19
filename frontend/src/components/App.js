@@ -7,17 +7,16 @@ import PageNotFound from './PageNotFound';
 import ChatPage from './ChatPage';
 import SignupPage from './SignupPage';
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<PageNotFound/>} />
-        <Route path="/" element={<ChatPage/>} />
-        <Route path="login" element={<LoginPage/>} />
-        <Route path="signup" element={<SignupPage/>} />
-      </Routes>
-    </BrowserRouter>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="*" element={<PageNotFound />} />
+      <Route path="/" element={<ChatPage />} />
+      <Route path="login" element={<LoginPage />} />
+      <Route path="signup" element={<SignupPage />} />
+    </Routes>
+  </BrowserRouter>
+);
+
 
 export default App;

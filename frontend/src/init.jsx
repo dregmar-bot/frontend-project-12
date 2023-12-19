@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import React from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import filter from 'leo-profanity';
-import { Provider, ErrorBoundary} from '@rollbar/react';
+import { Provider, ErrorBoundary } from '@rollbar/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 import ru from './locales/ru';
@@ -12,10 +12,9 @@ import UserProvider from './providers/UserProvider';
 import SocketProvider from './providers/SocketProvider';
 import messages, { addMessage } from './slices/messages';
 import channels, {
-  addChannel, removeChannel, renameChannel
+  addChannel, removeChannel, renameChannel,
 } from './slices/channels';
 import currentChannel from './slices/currentChannel';
-
 
 const init = async () => {
   const store = configureStore({
@@ -41,7 +40,7 @@ const init = async () => {
   socket.on('removeChannel', ({ id }) => {
     store.dispatch(removeChannel(id));
   });
-  socket.on('renameChannel', ({ id, ...changes}) => {
+  socket.on('renameChannel', ({ id, ...changes }) => {
     store.dispatch(renameChannel({ id, changes }));
   });
 
@@ -54,7 +53,7 @@ const init = async () => {
       },
       fallbackLng: 'ru',
       interpolation: {
-        escapeValue: false
+        escapeValue: false,
       },
     });
 
