@@ -113,11 +113,11 @@ const ChannelBox = () => {
           </svg>
           <span className="visually-hidden">+</span>
         </Button>
-        <AddChannelModal show={addModalIsOpen} close={closeAddModal}/>
       </div>
       <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {list}
       </ul>
+      <AddChannelModal show={addModalIsOpen} close={closeAddModal}/>
       <RemoveChannelModal show={removeModalIsOpen} close={closeRemoveModal} id={editingChannel}/>
       <RenameChannelModal show={renameModalIsOpen} close={closeRenameModal} id={editingChannel}/>
     </div>
