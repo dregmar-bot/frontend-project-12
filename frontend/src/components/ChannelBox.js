@@ -50,7 +50,8 @@ const ChannelBox = () => {
             onClick={handleSwitchChannel}
           >
             <span className="me-1">
-              # {name}
+              #
+              {name}
             </span>
           </button>
         </li>
@@ -66,7 +67,8 @@ const ChannelBox = () => {
             onClick={handleSwitchChannel}
           >
             <span className="me-1">
-              # {name}
+              #
+              {name}
             </span>
           </button>
           <Dropdown.Toggle
