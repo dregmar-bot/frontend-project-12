@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { channelsSelectors} from '../../slices/channels';
 import { Modal } from 'react-bootstrap';
 import SocketContext from '../../contexts/socketContext';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { switchChannel} from '../../slices/currentChannel';
 
 const AddChannelModal = ({ show, close }) => {
@@ -62,7 +62,6 @@ const AddChannelModal = ({ show, close }) => {
   }, [show])
 
   return (
-    <div>
       <Modal show={show} onHide={close} centered>
         <Modal.Header closeButton>
           <Modal.Title>{t(`modals.channelModal.add`)}</Modal.Title>
@@ -90,8 +89,6 @@ const AddChannelModal = ({ show, close }) => {
           </form>
         </Modal.Body>
       </Modal>
-      <ToastContainer/>
-    </div>
   );
 };
 
