@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import SocketContext from '../../contexts/socketContext';
 import { useTranslation } from 'react-i18next';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const RemoveChannelModal = ({ show, close, id }) => {
   const [isLoading, setLoading] = useState(false);
@@ -39,7 +39,6 @@ const RemoveChannelModal = ({ show, close, id }) => {
           </div>
         </Modal.Body>
       </Modal>
-      <ToastContainer/>
     </div>
   )
 }
