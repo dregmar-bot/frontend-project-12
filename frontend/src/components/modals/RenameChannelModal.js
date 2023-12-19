@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { channelsSelectors } from '../../slices/channels';
 import { Modal } from 'react-bootstrap';
 import SocketContext from '../../contexts/socketContext';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 const RenameChannelModal = ({ show, close,  id}) => {
@@ -88,7 +88,6 @@ const RenameChannelModal = ({ show, close,  id}) => {
           </form>
         </Modal.Body>
       </Modal>
-      <ToastContainer/>
     </div>
   );
 };
