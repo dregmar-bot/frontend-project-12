@@ -20,11 +20,17 @@ const AddChannelModal = ({ show, close }) => {
 
 
   const channelNameSchema = Yup.object({
-    name: Yup.string().test(
-      'name is duplicated',
-      `${t('yupErrors.channelNameIsDuplicated')}`,
-      (value) => !channelNames.includes(value),
-    ),
+    name: Yup.string()
+      .test(
+        'name is duplicated',
+        `${t('yupErrors.channelNameIsDuplicated')}`,
+        (value) => !channelNames.includes(value),
+      )
+      .test(
+        'from 3 to 20 characters',
+        `${t('yupErrors.channelNameLength')}`,
+        (value) => 3 <= value.length && value.length <= 20,
+      ),
   });
 
   const handleChange = (e) => setValue(e.target.value);
@@ -43,11 +49,12 @@ const AddChannelModal = ({ show, close }) => {
       } else {
         toast.error(t('modals.toast.unknownError'));
       }
-    }).catch(() => {
-      setError(t('socketErrors.timeout'));
+    }).catch((error) => {
+      const errorMessage = error.name === 'ValidationError' ? error.message : t('socketErrors.timeout');
+      setError(errorMessage);
       setLoading(false);
     })
-  }
+  };
 
   useEffect(() =>{
     setError(null);
