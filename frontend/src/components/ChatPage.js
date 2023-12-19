@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from "axios";
 import { addMessages } from '../slices/messages';
 import { addChannels } from '../slices/channels';
@@ -8,11 +9,12 @@ import { switchChannel } from '../slices/currentChannel';
 import Navbar from './Navbar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
+import { toast } from 'react-toastify';
 
 
 const ChatPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [_error, setError] = useState(null);
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
 
@@ -23,7 +25,6 @@ const ChatPage = () => {
   })
 
   if (token) {
-    const { token  } = localStorage;
     const fetchData = async () => {
       const response = await axios.get('api/v1/data', {
         headers: {
@@ -37,12 +38,12 @@ const ChatPage = () => {
 
     try {
       fetchData();
-    } catch (e) {
-      setError(e.code);
+    } catch {
+      toast.error(t('chatPage.toast.fetchError'));
     }
 
     return (
-      <div className="h-100" id="chat">
+      <div className="h-100 d-flex flex-column" id="chat">
         <Navbar/>
         <div className="container h-100 my-4 overflow-hidden rounded shadow">
           <div className="row h-100 bg-white flex-md-row">
@@ -52,6 +53,7 @@ const ChatPage = () => {
             </div>
           </div>
         </div>
+        <div className="Toastify"></div>
       </div>
     );
   }
