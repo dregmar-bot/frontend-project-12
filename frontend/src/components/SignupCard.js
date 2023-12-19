@@ -17,13 +17,13 @@ const SignupCardForm = () => {
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string()
-    .min(3, `${t('yupErrors.minSymbols.key', { count: 3 })}`)
-    .max(20, `${t('yupErrors.maxSymbols.key', { count: 20 })}`),
+      .min(3, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`)
+      .max(20, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`),
     password: Yup.string()
-    .min(6, `${t('yupErrors.minSymbols.key', { count: 6 })}`)
-    .max(50, `${t('yupErrors.maxSymbols.key', { count: 50 })}`),
+      .min(6, `${t('yupErrors.minSymbols', { count: 6 })} ${t('yupErrors.maxSymbols.key', { count: 50 })}`)
+      .max(50, `${t('yupErrors.minSymbols', { count: 6 })} ${t('yupErrors.maxSymbols.key', { count: 50 })}`),
     confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Пароли не совпадают'),
+      .oneOf([Yup.ref('password')], `${t('yupErrors.passwordMismatch')}`),
   });
 
   return <Formik
