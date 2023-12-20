@@ -9,10 +9,11 @@ const user = {
 
 const UserProvider = ({ children }) => {
   const [activeUser, setUser] = useState(user);
-  const isAuthorized = useCallback(() => !!activeUser.token);
+  const isAuthorized = useCallback(() => !!activeUser.token, [activeUser]);
+
 
   return (
-    <UserContext.Provider value={{ activeUser, setUser, isAuthorized }}>
+    <UserContext.Provider value={{ activeUser: useCallback(() => activeUser, []), setUser: useCallback((user) => setUser(user), []), isAuthorized }}>
       {children}
     </UserContext.Provider>
   );
