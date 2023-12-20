@@ -9,7 +9,7 @@ const user = {
 
 const UserProvider = ({ children }) => {
   const [activeUser, setUser] = useState(user);
-  const isAuthorized = useCallback(() => !!activeUser.token, []);
+  const isAuthorized = useCallback(() => !!activeUser.token);
 
   return (
     <UserContext.Provider value={{ activeUser, setUser, isAuthorized }}>
