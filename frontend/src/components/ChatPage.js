@@ -38,7 +38,7 @@ const ChatPage = () => {
         toast.error(t('chatPage.toast.fetchError'));
       }
     }
-  }, []);
+  });
 
   return (
     <div className="h-100 d-flex flex-column" id="chat">
@@ -49,7 +49,7 @@ const ChatPage = () => {
           <div className="col p-0 h-100">
             <MessagesBox />
           </div>
-          </div>
+        </div>
       </div>
       <ToastContainer />
     </div>

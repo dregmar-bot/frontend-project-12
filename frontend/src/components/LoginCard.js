@@ -40,41 +40,41 @@ const LoginCardForm = () => {
       }}
     >
       {() => (
-      <Form
-        className="col-12 col-md-6 mt-3 mt-mb-0"
-      >
-        <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
-        <div className="form-floating mb-3">
-          <Field
-            name="username"
-            autoComplete="username"
-            required
-            placeholder={t('loginPage.loginForm.username')}
-            id="username"
-            className={`form-control ${error ? 'is-invalid' : ''}`}
-          />
-          <label className="form-label" htmlFor="username">{t('loginPage.loginForm.username')}</label>
-        </div>
-        <div className="form-floating mb-4">
-          <Field
-            type="password"
-            name="password"
-            autoComplete="current-password"
-            required
-            placeholder={t('loginPage.loginForm.password')}
-            id="password"
-            className={`form-control ${error ? 'is-invalid' : ''}`}
-          />
-          {error ? <div className="invalid-tooltip">{t(`loginPage.errors.${error}`)}</div> : null}
-          <label className="form-label" htmlFor="password">{t('loginPage.loginForm.password')}</label>
-        </div>
-        <button
-          type="submit"
-          className="w-100 mb-3 btn btn-outline-primary"
+        <Form
+          className="col-12 col-md-6 mt-3 mt-mb-0"
         >
-          {t('loginPage.loginForm.login')}
-        </button>
-      </Form>
+          <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
+          <div className="form-floating mb-3">
+            <Field
+              name="username"
+              autoComplete="username"
+              required
+              placeholder={t('loginPage.loginForm.username')}
+              id="username"
+              className={`form-control ${error ? 'is-invalid' : ''}`}
+            />
+            <label className="form-label" htmlFor="username">{t('loginPage.loginForm.username')}</label>
+          </div>
+          <div className="form-floating mb-4">
+            <Field
+              type="password"
+              name="password"
+              autoComplete="current-password"
+              required
+              placeholder={t('loginPage.loginForm.password')}
+              id="password"
+              className={`form-control ${error ? 'is-invalid' : ''}`}
+            />
+            {error ? <div className="invalid-tooltip">{t(`loginPage.errors.${error}`)}</div> : null}
+            <label className="form-label" htmlFor="password">{t('loginPage.loginForm.password')}</label>
+          </div>
+          <button
+            type="submit"
+            className="w-100 mb-3 btn btn-outline-primary"
+          >
+            {t('loginPage.loginForm.login')}
+          </button>
+        </Form>
       )}
     </Formik>
   );
