@@ -41,7 +41,8 @@ const LoginCardForm = () => {
     >
       {() => (
       <Form
-        className="col-12 col-md-6 mt-3 mt-mb-0">
+        className="col-12 col-md-6 mt-3 mt-mb-0"
+      >
         <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
         <div className="form-floating mb-3">
           <Field

@@ -17,45 +17,43 @@ const ChatPage = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
 
+  const fetchData = async () => {
+    const response = await axios.get('api/v1/data', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(addMessages(response.data.messages));
+    dispatch(addChannels(response.data.channels));
+    dispatch(switchChannel(response.data.currentChannelId));
+  };
+
   useEffect(() => {
     if (!token) {
       navigate('/login');
+    } else {
+      try {
+        fetchData();
+      } catch {
+        toast.error(t('chatPage.toast.fetchError'));
+      }
     }
-  });
+  }, []);
 
-  if (token) {
-    const fetchData = async () => {
-      const response = await axios.get('api/v1/data', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      dispatch(addMessages(response.data.messages));
-      dispatch(addChannels(response.data.channels));
-      dispatch(switchChannel(response.data.currentChannelId));
-    };
-
-    try {
-      fetchData();
-    } catch {
-      toast.error(t('chatPage.toast.fetchError'));
-    }
-
-    return (
-      <div className="h-100 d-flex flex-column" id="chat">
-        <Navbar />
-        <div className="container h-100 my-4 overflow-hidden rounded shadow">
-          <div className="row h-100 bg-white flex-md-row">
-            <ChannelBox />
-            <div className="col p-0 h-100">
-              <MessagesBox />
-            </div>
+  return (
+    <div className="h-100 d-flex flex-column" id="chat">
+      <Navbar />
+      <div className="container h-100 my-4 overflow-hidden rounded shadow">
+        <div className="row h-100 bg-white flex-md-row">
+          <ChannelBox />
+          <div className="col p-0 h-100">
+            <MessagesBox />
           </div>
-        </div>
-        <ToastContainer />
+          </div>
       </div>
-    );
-  }
+      <ToastContainer />
+    </div>
+  );
 };
 
 export default ChatPage;

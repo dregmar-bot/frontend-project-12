@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import UserContext from '../contexts/userContext';
 
 const user = {
@@ -9,7 +9,7 @@ const user = {
 
 const UserProvider = ({ children }) => {
   const [activeUser, setUser] = useState(user);
-  const isAuthorized = () => !!activeUser.token;
+  const isAuthorized = useCallback(() => !!activeUser.token, []);
 
   return (
     <UserContext.Provider value={{ activeUser, setUser, isAuthorized }}>
