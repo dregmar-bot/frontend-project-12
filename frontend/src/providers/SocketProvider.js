@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import SocketContext from '../contexts/socketContext';
 
 const SocketProvider = ({ socket, children }) => {
@@ -7,17 +7,13 @@ const SocketProvider = ({ socket, children }) => {
   const renameChannel = (id, name) => socket.timeout(5000).emitWithAck('renameChannel', { id, name });
   const removeChannel = (id) => socket.timeout(5000).emitWithAck('removeChannel', { id });
 
-  const memoizedSendMessage = useCallback(sendMessage, []);
-  const memoizedAddChannel = useCallback(addChannel, []);
-  const memoizedRenameChannel = useCallback(renameChannel, []);
-  const memoizedRemoveChannel = useCallback(removeChannel, []);
-
-  const api = {
-    sendMessage: memoizedSendMessage,
-    addChannel: memoizedAddChannel,
-    removeChannel: memoizedRemoveChannel,
-    renameChannel: memoizedRenameChannel,
-  };
+  const api = useMemo(() => {
+  return {
+    sendMessage,
+    addChannel,
+    removeChannel,
+    renameChannel,
+  }}, []);
 
   return (
     <SocketContext.Provider value={api}>
