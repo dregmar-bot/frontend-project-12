@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import React from 'react';
+import SocketContext from './contexts/socketContext';
 import { Provider as StoreProvider } from 'react-redux';
 import filter from 'leo-profanity';
 import { Provider, ErrorBoundary } from '@rollbar/react';
@@ -9,7 +10,6 @@ import { io } from 'socket.io-client';
 import ru from './locales/ru';
 import App from './components/App';
 import UserProvider from './providers/UserProvider';
-import SocketProvider from './providers/SocketProvider';
 import messages, { addMessage } from './slices/messages';
 import channels, {
   addChannel, removeChannel, renameChannel,
@@ -26,8 +26,8 @@ const init = async () => {
   });
 
   const rollbarConfig = {
-    accessToken: '8ff6c781a3f34e929555c77e574d125e',
-    environment: 'testenv',
+    accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
+    environment: 'production',
   };
 
   const socket = io();
@@ -43,6 +43,18 @@ const init = async () => {
   socket.on('renameChannel', ({ id, ...changes }) => {
     store.dispatch(renameChannel({ id, changes }));
   });
+
+  const sendMessageApi = (message) => socket.timeout(5000).emitWithAck('newMessage', message);
+  const addChannelApi = (channel) => socket.timeout(5000).emitWithAck('newChannel', channel);
+  const renameChannelApi = (id, name) => socket.timeout(5000).emitWithAck('renameChannel', { id, name });
+  const removeChannelApi = (id) => socket.timeout(5000).emitWithAck('removeChannel', { id });
+
+  const api = {
+      sendMessage: sendMessageApi,
+      addChannel: addChannelApi,
+      removeChannel: removeChannelApi,
+      renameChannel: renameChannelApi,
+    };
 
   const i18n = i18next.createInstance();
   await i18n
@@ -65,9 +77,9 @@ const init = async () => {
         <React.StrictMode>
           <UserProvider>
             <StoreProvider store={store}>
-              <SocketProvider socket={socket}>
+              <SocketContext.Provider value={api}>
                 <App />
-              </SocketProvider>
+              </SocketContext.Provider>
             </StoreProvider>
           </UserProvider>
         </React.StrictMode>
