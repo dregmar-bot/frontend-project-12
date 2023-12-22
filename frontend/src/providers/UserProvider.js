@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, { useMemo, useState } from 'react';
 import UserContext from '../contexts/userContext';
 
 const UserProvider = ({ children }) => {
@@ -13,7 +13,7 @@ const UserProvider = ({ children }) => {
     activeUser,
     setUser,
     isAuthorized,
-  }), []);
+  }), [activeUser, isAuthorized]);
 
   return (
     <UserContext.Provider value={user}>
