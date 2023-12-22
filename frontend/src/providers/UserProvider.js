@@ -1,19 +1,22 @@
-import React, { useCallback, useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import UserContext from '../contexts/userContext';
 
-const user = {
-  username: null,
-  password: null,
-  token: null,
-};
-
 const UserProvider = ({ children }) => {
-  const [activeUser, setUser] = useState(user);
-  const isAuthorized = useCallback(() => !!activeUser.token, [activeUser]);
+  const [activeUser, setUser] = useState({
+    username: null,
+    password: null,
+    token: null,
+  });
+  const isAuthorized = !!activeUser.token;
 
+  const user = useMemo(() => ({
+    activeUser,
+    setUser,
+    isAuthorized,
+  }), []);
 
   return (
-    <UserContext.Provider value={{ activeUser: useCallback(() => activeUser, []), setUser: useCallback((user) => setUser(user), []), isAuthorized }}>
+    <UserContext.Provider value={user}>
       {children}
     </UserContext.Provider>
   );
