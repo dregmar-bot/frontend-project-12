@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import React from 'react';
-import SocketContext from './contexts/socketContext';
 import { Provider as StoreProvider } from 'react-redux';
 import filter from 'leo-profanity';
 import { Provider, ErrorBoundary } from '@rollbar/react';
@@ -10,6 +9,7 @@ import { io } from 'socket.io-client';
 import ru from './locales/ru';
 import App from './components/App';
 import UserProvider from './providers/UserProvider';
+import SocketContext from './contexts/socketContext';
 import messages, { addMessage } from './slices/messages';
 import channels, {
   addChannel, removeChannel, renameChannel,
@@ -50,11 +50,11 @@ const init = async () => {
   const removeChannelApi = (id) => socket.timeout(5000).emitWithAck('removeChannel', { id });
 
   const api = {
-      sendMessage: sendMessageApi,
-      addChannel: addChannelApi,
-      removeChannel: removeChannelApi,
-      renameChannel: renameChannelApi,
-    };
+    sendMessage: sendMessageApi,
+    addChannel: addChannelApi,
+    removeChannel: removeChannelApi,
+    renameChannel: renameChannelApi,
+  };
 
   const i18n = i18next.createInstance();
   await i18n
