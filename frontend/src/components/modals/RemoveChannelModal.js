@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import SocketContext from '../../contexts/socketContext';
+import ApiContext from '../../contexts/apiContext';
 
 const RemoveChannelModal = ({ show, close, id }) => {
   const [isLoading, setLoading] = useState(false);
-  const { removeChannel } = useContext(SocketContext);
+  const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
 
   const handleSubmit = async () => {
