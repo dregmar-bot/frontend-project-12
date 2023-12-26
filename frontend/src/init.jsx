@@ -8,8 +8,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 import ru from './locales/ru';
 import App from './components/App';
-import UserProvider from './providers/UserProvider';
-import SocketContext from './contexts/socketContext';
+import AuthProvider from './providers/AuthProvider';
+import ApiContext from './contexts/apiContext';
 import messages, { addMessage } from './slices/messages';
 import channels, {
   addChannel, removeChannel, renameChannel,
@@ -75,13 +75,13 @@ const init = async () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <React.StrictMode>
-          <UserProvider>
+          <AuthProvider>
             <StoreProvider store={store}>
-              <SocketContext.Provider value={api}>
+              <ApiContext.Provider value={api}>
                 <App />
-              </SocketContext.Provider>
+              </ApiContext.Provider>
             </StoreProvider>
-          </UserProvider>
+          </AuthProvider>
         </React.StrictMode>
       </ErrorBoundary>
     </Provider>
