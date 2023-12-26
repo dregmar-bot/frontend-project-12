@@ -1,19 +1,14 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import userContext from '../contexts/userContext';
+import AuthContext from '../contexts/authContext';
 
 const Navbar = () => {
   const isAuthorized = () => !!localStorage.getItem('token');
-  const { setUser } = useContext(userContext);
+  const { deauthorize } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleUnauthorize = () => {
-    setUser({
-      username: null,
-      password: null,
-      token: null,
-    });
-    localStorage.clear();
+  const handleEscape = () => {
+    deauthorize();
     navigate('/login');
   };
 
@@ -21,7 +16,7 @@ const Navbar = () => {
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <a className="navbar-brand" href="/">Hexlet Chat</a>
-        { isAuthorized() ? <button type="button" className="btn btn-primary" onClick={handleUnauthorize}>Выйти</button> : null}
+        { isAuthorized() ? <button type="button" className="btn btn-primary" onClick={handleEscape}>Выйти</button> : null}
       </div>
     </nav>
   );
