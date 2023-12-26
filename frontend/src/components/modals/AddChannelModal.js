@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { channelsSelectors } from '../../slices/channels';
-import SocketContext from '../../contexts/socketContext';
+import SocketContext from '../../contexts/apiContext';
 import { switchChannel } from '../../slices/currentChannel';
 
 const AddChannelModal = ({ show, close }) => {
