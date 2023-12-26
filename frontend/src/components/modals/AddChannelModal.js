@@ -7,14 +7,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { channelsSelectors } from '../../slices/channels';
-import SocketContext from '../../contexts/apiContext';
+import ApiContext from '../../contexts/apiContext';
 import { switchChannel } from '../../slices/currentChannel';
 
 const AddChannelModal = ({ show, close }) => {
   const [isLoading, setLoading] = useState(false);
   const [value, setValue] = useState('');
   const [error, setError] = useState(null);
-  const { addChannel } = useContext(SocketContext);
+  const { addChannel } = useContext(ApiContext);
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const { t } = useTranslation();
