@@ -8,14 +8,13 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import signup from '../images/signup.png';
-import UserContext from '../contexts/userContext.js';
-import authorize from '../utilts/authorize';
+import AuthContext from '../contexts/authContext.js';
 
 const SignupCardForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { setUser } = useContext(UserContext);
+  const { authorize } = useContext(AuthContext);
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string()
@@ -38,8 +37,7 @@ const SignupCardForm = () => {
         try {
           const response = await axios.post('/api/v1/signup', { username, password });
           const { token } = response.data;
-          const activeUser = { username, password, token };
-          authorize(activeUser, setUser);
+          authorize({ username, password, token });
           navigate('/');
         } catch (e) {
           switch (e.code) {
