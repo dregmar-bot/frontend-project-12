@@ -5,12 +5,12 @@ import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { messageSelectors } from '../slices/messages';
 import { channelsSelectors } from '../slices/channels';
-import SocketContext from '../contexts/apiContext';
+import ApiContext from '../contexts/apiContext';
 
 const MessagesBox = () => {
   const [text, setText] = useState('');
   const { t } = useTranslation();
-  const { sendMessage } = useContext(SocketContext);
+  const { sendMessage } = useContext(ApiContext);
 
   const channelId = useSelector((state) => state.currentChannel);
   const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
