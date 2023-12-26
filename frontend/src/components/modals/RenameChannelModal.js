@@ -7,13 +7,13 @@ import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { channelsSelectors } from '../../slices/channels';
-import SocketContext from '../../contexts/socketContext';
+import ApiContext from '../../contexts/apiContext';
 
 const RenameChannelModal = ({ show, close, id }) => {
   const [isLoading, setLoading] = useState(false);
   const [value, setValue] = useState('');
   const [error, setError] = useState(null);
-  const { renameChannel } = useContext(SocketContext);
+  const { renameChannel } = useContext(ApiContext);
   const inputEl = useRef(null);
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
   const { t } = useTranslation();
