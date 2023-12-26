@@ -5,13 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import logo from '../images/logo.png';
-import UserContext from '../contexts/userContext.js';
-import authorize from '../utilts/authorize';
+import AuthContext from '../contexts/authContext.js';
 
 const LoginCardForm = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { setUser } = useContext(UserContext);
+  const { authorize } = useContext(AuthContext);
   const [error, setError] = useState(null);
 
   return (
@@ -22,8 +21,7 @@ const LoginCardForm = () => {
         try {
           const response = await axios.post('/api/v1/login', { username, password });
           const { token } = response.data;
-          const activeUser = { username, password, token };
-          authorize(activeUser, setUser);
+          authorize({ username, password, token });
           navigate('/');
         } catch (e) {
           switch (e.code) {
