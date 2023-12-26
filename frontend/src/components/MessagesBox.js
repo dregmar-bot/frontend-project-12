@@ -5,7 +5,7 @@ import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { messageSelectors } from '../slices/messages';
 import { channelsSelectors } from '../slices/channels';
-import SocketContext from '../contexts/socketContext';
+import SocketContext from '../contexts/apiContext';
 
 const MessagesBox = () => {
   const [text, setText] = useState('');
