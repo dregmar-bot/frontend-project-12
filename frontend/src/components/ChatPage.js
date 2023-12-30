@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,17 +10,18 @@ import { switchChannel } from '../slices/currentChannel';
 import Navbar from './Navbar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
+import AuthContext from '../contexts/authContext.js';
 
 const ChatPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = localStorage.getItem('token');
+  const { getToken, isAuthorized } = useContext(AuthContext);
 
   const fetchData = async () => {
     const response = await axios.get('api/v1/data', {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
     dispatch(addMessages(response.data.messages));
@@ -29,7 +30,7 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
-    if (!token) {
+    if (!isAuthorized()) {
       navigate('/login');
     } else {
       try {
