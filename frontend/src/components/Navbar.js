@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../contexts/authContext';
 
 const Navbar = () => {
-  const isAuthorized = () => !!localStorage.getItem('token');
-  const { deauthorize } = useContext(AuthContext);
+  const { isAuthorized, deauthorize } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleEscape = () => {
