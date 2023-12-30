@@ -6,18 +6,20 @@ import { useTranslation } from 'react-i18next';
 import { messageSelectors } from '../slices/messages';
 import { channelsSelectors } from '../slices/channels';
 import ApiContext from '../contexts/apiContext';
+import AuthContext from '../contexts/authContext.js';
 
 const MessagesBox = () => {
   const [text, setText] = useState('');
   const { t } = useTranslation();
   const { sendMessage } = useContext(ApiContext);
+  const { getUsername } = useContext(AuthContext);
 
   const channelId = useSelector((state) => state.currentChannel);
   const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
   const messages = useSelector(messageSelectors.selectAll)
     .filter((message) => message.channelId === channelId);
 
-  const username = localStorage.getItem('username');
+  const username = getUsername();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
