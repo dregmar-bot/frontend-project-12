@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginCard from './LoginCard';
 import Navbar from './Navbar';
+import AuthContext from '../contexts/authContext';
 
 const LoginPage = () => {
-  const token = localStorage.getItem('token');
+  const { isAuthorized } = useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (token) {
+    if (isAuthorized()) {
       navigate('/');
     }
   });
