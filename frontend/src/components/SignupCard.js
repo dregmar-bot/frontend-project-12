@@ -37,7 +37,7 @@ const SignupCardForm = () => {
         try {
           const response = await axios.post('/api/v1/signup', { username, password });
           const { token } = response.data;
-          authorize({ username, password, token });
+          authorize({ username, token });
           navigate('/');
         } catch (e) {
           switch (e.code) {
