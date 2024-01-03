@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import logo from '../images/logo.png';
 import AuthContext from '../contexts/authContext.js';
+import routes from '../routes';
 
 const LoginCardForm = () => {
   const navigate = useNavigate();
@@ -19,10 +20,10 @@ const LoginCardForm = () => {
       onSubmit={async (values) => {
         const { username, password } = values;
         try {
-          const response = await axios.post('/api/v1/login', { username, password });
+          const response = await axios.post(routes.serverApi.loginPath(), { username, password });
           const { token } = response.data;
           authorize({ username, token });
-          navigate('/');
+          navigate(routes.chatPath());
         } catch (e) {
           switch (e.code) {
             case 'ERR_BAD_REQUEST':
@@ -99,7 +100,7 @@ const LoginCardFooter = () => {
       <div className="text-center">
         <span>{t('loginPage.loginCardFooter.haveNoAccount')}</span>
 
-        <a href="/signup">{t('loginPage.loginCardFooter.registration')}</a>
+        <a href={routes.signupPath()}>{t('loginPage.loginCardFooter.registration')}</a>
       </div>
     </div>
   );
