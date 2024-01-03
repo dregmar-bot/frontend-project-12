@@ -11,18 +11,17 @@ import Navbar from './Navbar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
 import AuthContext from '../contexts/authContext.js';
+import routes from '../routes';
 
 const ChatPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { getToken, isAuthorized } = useContext(AuthContext);
+  const { activeUser, getAuthHeader } = useContext(AuthContext);
 
   const fetchData = async () => {
-    const response = await axios.get('api/v1/data', {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
+    const response = await axios.get(routes.serverApi.dataPath(), {
+      headers: getAuthHeader(),
     });
     dispatch(addMessages(response.data.messages));
     dispatch(addChannels(response.data.channels));
@@ -30,8 +29,8 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
-    if (!isAuthorized()) {
-      navigate('/login');
+    if (!activeUser) {
+      navigate(routes.loginPath());
     } else {
       try {
         fetchData();
@@ -39,7 +38,7 @@ const ChatPage = () => {
         toast.error(t('chatPage.toast.fetchError'));
       }
     }
-  });
+  }, [activeUser, fetchData]);
 
   return (
     <div className="h-100 d-flex flex-column" id="chat">
