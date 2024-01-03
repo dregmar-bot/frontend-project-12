@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import signup from '../images/signup.png';
 import AuthContext from '../contexts/authContext.js';
+import routes from '../routes';
 
 const SignupCardForm = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -35,10 +36,10 @@ const SignupCardForm = () => {
         const { username, password } = values;
         setSubmitting(true);
         try {
-          const response = await axios.post('/api/v1/signup', { username, password });
+          const response = await axios.post(routes.serverApi.signupPath(), { username, password });
           const { token } = response.data;
           authorize({ username, token });
-          navigate('/');
+          navigate(routes.chatPath());
         } catch (e) {
           switch (e.code) {
             case 'ERR_NETWORK':
