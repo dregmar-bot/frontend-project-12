@@ -12,14 +12,14 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
     setUser(null);
   };
-  const getAuthHeader = () => ({ Authorization: `Bearer ${activeUser.token}`})
+  const getAuthHeader = () => ({ Authorization: `Bearer ${activeUser.token}` });
 
   const authApi = useMemo(() => ({
     activeUser,
     authorize,
     deauthorize,
     getAuthHeader,
-  }), [activeUser, getAuthHeader]);
+  }), [activeUser]);
 
   return (
     <AuthContext.Provider value={authApi}>
