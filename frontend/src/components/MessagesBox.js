@@ -12,19 +12,18 @@ const MessagesBox = () => {
   const [text, setText] = useState('');
   const { t } = useTranslation();
   const { sendMessage } = useContext(ApiContext);
-  const { getUsername } = useContext(AuthContext);
+  const { activeUser } = useContext(AuthContext);
 
   const channelId = useSelector((state) => state.currentChannel);
   const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
   const messages = useSelector(messageSelectors.selectAll)
     .filter((message) => message.channelId === channelId);
 
-  const username = getUsername();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const message = { body: text, channelId, username };
+      const message = { body: text, channelId, username: activeUser.username };
       const { status } = await sendMessage(message);
       if (status !== 'ok') {
         toast.error(t('modals.toast.unknownError'));
