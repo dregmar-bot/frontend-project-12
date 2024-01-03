@@ -19,7 +19,6 @@ const MessagesBox = () => {
   const messages = useSelector(messageSelectors.selectAll)
     .filter((message) => message.channelId === channelId);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
