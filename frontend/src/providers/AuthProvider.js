@@ -2,37 +2,24 @@ import React, { useMemo, useState } from 'react';
 import AuthContext from '../contexts/authContext';
 
 const AuthProvider = ({ children }) => {
-  const [activeUser, setUser] = useState({
-    username: null,
-    token: null,
-  });
-  const isAuthorized = () => !!localStorage.getItem('chatToken');
+  const [activeUser, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const authorize = (user) => {
+    localStorage.setItem('user', JSON.stringify(user));
     setUser(user);
-    const { username, token } = user;
-    localStorage.setItem('chatToken', token);
-    localStorage.setItem('chatUsername', username);
   };
   const deauthorize = () => {
-    setUser({
-      username: null,
-      token: null,
-    });
-    localStorage.removeItem('chatToken');
-    localStorage.removeItem('chatUsername');
+    localStorage.removeItem('user');
+    setUser(null);
   };
-  const getToken = () => localStorage.getItem('chatToken');
-  const getUsername = () => localStorage.getItem('chatUsername');
+  const getAuthHeader = () => ({ Authorization: `Bearer ${activeUser.token}`})
 
   const authApi = useMemo(() => ({
     activeUser,
     authorize,
     deauthorize,
-    isAuthorized,
-    getToken,
-    getUsername,
-  }), [activeUser]);
+    getAuthHeader,
+  }), [activeUser, getAuthHeader]);
 
   return (
     <AuthContext.Provider value={authApi}>
