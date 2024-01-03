@@ -38,7 +38,7 @@ const ChatPage = () => {
         toast.error(t('chatPage.toast.fetchError'));
       }
     }
-  }, [activeUser, fetchData]);
+  }, [activeUser, fetchData, navigate, t]);
 
   return (
     <div className="h-100 d-flex flex-column" id="chat">
