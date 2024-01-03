@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import LoginCard from './LoginCard';
 import Navbar from './Navbar';
 import AuthContext from '../contexts/authContext';
+import routes from '../routes';
 
 const LoginPage = () => {
-  const { isAuthorized } = useContext(AuthContext);
+  const { activeUser } = useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
-    if (isAuthorized()) {
-      navigate('/');
+    if (activeUser) {
+      navigate(routes.chatPath());
     }
   });
   return (
