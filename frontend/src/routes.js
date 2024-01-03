@@ -7,6 +7,6 @@ const routes = {
   chatPath: () => '/',
   loginPath: () => '/login',
   signupPath: () => '/signup',
-}
+};
 
 export default routes;
