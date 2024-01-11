@@ -19,26 +19,26 @@ const ChatPage = () => {
   const dispatch = useDispatch();
   const { activeUser, getAuthHeader } = useContext(AuthContext);
 
-  const fetchData = async () => {
-    const response = await axios.get(routes.serverApi.dataPath(), {
-      headers: getAuthHeader(),
-    });
-    dispatch(addMessages(response.data.messages));
-    dispatch(addChannels(response.data.channels));
-    dispatch(switchChannel(response.data.currentChannelId));
-  };
-
   useEffect(() => {
     if (!activeUser) {
       navigate(routes.loginPath());
     } else {
       try {
+        const fetchData = async () => {
+          const response = await axios.get(routes.serverApi.dataPath(), {
+            headers: getAuthHeader(),
+          });
+          dispatch(addMessages(response.data.messages));
+          dispatch(addChannels(response.data.channels));
+          dispatch(switchChannel(response.data.currentChannelId));
+        };
+
         fetchData();
       } catch {
         toast.error(t('chatPage.toast.fetchError'));
       }
     }
-  }, [activeUser, fetchData, navigate, t]);
+  }, [activeUser, navigate, t]);
 
   return (
     <div className="h-100 d-flex flex-column" id="chat">
