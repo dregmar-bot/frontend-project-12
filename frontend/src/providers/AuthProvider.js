@@ -2,7 +2,9 @@ import React, { useMemo, useState } from 'react';
 import AuthContext from '../contexts/authContext';
 
 const AuthProvider = ({ children }) => {
-  const [activeUser, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [activeUser, setUser] = useState(
+    () => JSON.parse(localStorage.getItem('user'))
+  );
 
   const authorize = (user) => {
     localStorage.setItem('user', JSON.stringify(user));
