@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
@@ -98,9 +99,9 @@ const LoginCardFooter = () => {
   return (
     <div className="card-footer p-4">
       <div className="text-center">
-        <span>{t('loginPage.loginCardFooter.haveNoAccount')}</span>
+        <span>{t('loginPage.loginCardFooter.haveNoAccount')} </span>
 
-        <a href={routes.signupPath()}>{t('loginPage.loginCardFooter.registration')}</a>
+        <Link to={routes.signupPath()}>{t('loginPage.loginCardFooter.registration')}</Link>
       </div>
     </div>
   );
