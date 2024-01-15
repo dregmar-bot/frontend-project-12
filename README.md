@@ -3,7 +3,7 @@
 
 # Chat app
 ## About
-This package is a ch at application using <a href=https://github.com/socketio/socket.io>socket.io</a> with the ability to add/remove channels
+This package is a chat application using <a href=https://github.com/socketio/socket.io>socket.io</a> with the ability to add/remove channels
 
 ![img.png](frontend/img/demo.png)
 ### Try to use:
