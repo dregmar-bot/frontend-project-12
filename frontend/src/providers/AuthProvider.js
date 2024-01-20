@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
     authorize,
     deauthorize,
     getAuthHeader,
-  }), [activeUser]);
+  }), [activeUser, getAuthHeader]);
 
   return (
     <AuthContext.Provider value={authApi}>
