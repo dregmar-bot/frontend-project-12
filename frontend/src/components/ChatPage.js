@@ -32,13 +32,12 @@ const ChatPage = () => {
           dispatch(addChannels(response.data.channels));
           dispatch(switchChannel(response.data.currentChannelId));
         };
-
         fetchData();
       } catch {
         toast.error(t('chatPage.toast.fetchError'));
       }
     }
-  }, [activeUser, navigate, t]);
+  }, [activeUser, navigate, t, dispatch, getAuthHeader]);
 
   return (
     <div className="h-100 d-flex flex-column" id="chat">
