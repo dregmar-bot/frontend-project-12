@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { addMessages } from '../slices/messages';
-import { addChannels } from '../slices/channels';
-import { switchChannel } from '../slices/currentChannel';
+import { addChannels, switchChannel } from '../slices/channels';
 import Navbar from './Navbar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
@@ -23,19 +22,19 @@ const ChatPage = () => {
     if (!activeUser) {
       navigate(routes.loginPath());
     } else {
-      try {
-        const fetchData = async () => {
+      const fetchData = async () => {
+        try {
           const response = await axios.get(routes.serverApi.dataPath(), {
             headers: getAuthHeader(),
           });
           dispatch(addMessages(response.data.messages));
           dispatch(addChannels(response.data.channels));
           dispatch(switchChannel(response.data.currentChannelId));
-        };
-        fetchData();
-      } catch {
-        toast.error(t('chatPage.toast.fetchError'));
-      }
+        } catch {
+          toast.error(t('chatPage.toast.fetchError'));
+        }
+      };
+      fetchData();
     }
   }, [activeUser, navigate, t, dispatch, getAuthHeader]);
 

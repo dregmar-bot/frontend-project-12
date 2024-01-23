@@ -6,9 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { channelsSelectors } from '../../slices/channels';
+import { channelsSelectors, switchChannel } from '../../slices/channels';
 import ApiContext from '../../contexts/apiContext';
-import { switchChannel } from '../../slices/currentChannel';
 
 const AddChannelModal = ({ show, close }) => {
   const [isLoading, setLoading] = useState(false);

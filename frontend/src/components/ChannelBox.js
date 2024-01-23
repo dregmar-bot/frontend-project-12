@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
-import { channelsSelectors } from '../slices/channels';
-import { switchChannel } from '../slices/currentChannel';
+import { channelsSelectors, switchChannel } from '../slices/channels';
 import AddChannelModal from './modals/AddChannelModal';
 import RemoveChannelModal from './modals/RemoveChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
@@ -35,7 +34,7 @@ const ChannelBox = () => {
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const channelId = useSelector((state) => state.currentChannel);
+  const channelId = useSelector((state) => state.channels.currentChannel);
   const channels = useSelector(channelsSelectors.selectAll);
 
   const list = channels.map((channel) => {

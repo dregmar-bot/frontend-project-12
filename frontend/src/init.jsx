@@ -14,14 +14,12 @@ import messages, { addMessage } from './slices/messages';
 import channels, {
   addChannel, removeChannel, renameChannel,
 } from './slices/channels';
-import currentChannel from './slices/currentChannel';
 
 const init = async () => {
   const store = configureStore({
     reducer: {
       channels,
       messages,
-      currentChannel,
     },
   });
 

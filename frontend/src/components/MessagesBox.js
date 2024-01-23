@@ -14,7 +14,7 @@ const MessagesBox = () => {
   const { sendMessage } = useContext(ApiContext);
   const { activeUser } = useContext(AuthContext);
 
-  const channelId = useSelector((state) => state.currentChannel);
+  const channelId = useSelector((state) => state.channels.currentChannel);
   const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
   const messages = useSelector(messageSelectors.selectAll)
     .filter((message) => message.channelId === channelId);
