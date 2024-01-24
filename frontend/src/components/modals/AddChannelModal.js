@@ -37,15 +37,11 @@ const AddChannelModal = ({ show, close }) => {
     const name = value;
     channelNameSchema.validate({ name })
       .then(async () => {
-        const { status, data } = await addChannel({ name });
-        if (status === 'ok') {
-          toast.success(t('modals.toast.add'));
-          setLoading(false);
-          dispatch(switchChannel(data.id));
-          close();
-        } else {
-          toast.error(t('modals.toast.unknownError'));
-        }
+        const { data } = await addChannel({ name });
+        toast.success(t('modals.toast.add'));
+        setLoading(false);
+        dispatch(switchChannel(data.id));
+        close();
       }).catch((err) => {
         const errorMessage = err.name === 'ValidationError' ? err.message : t('socketErrors.timeout');
         setError(errorMessage);
