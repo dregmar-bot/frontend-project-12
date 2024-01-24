@@ -23,12 +23,8 @@ const MessagesBox = () => {
     e.preventDefault();
     try {
       const message = { body: text, channelId, username: activeUser.username };
-      const { status } = await sendMessage(message);
-      if (status !== 'ok') {
-        toast.error(t('modals.toast.unknownError'));
-      } else {
-        setText('');
-      }
+      await sendMessage(message);
+      setText('');
     } catch {
       toast.error(t('socketErrors.timeout'));
     }
