@@ -1,7 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import pageNotFound from '../images/404.png';
+import routes from '../routes';
 
 const PageNotFound = () => {
   const { t } = useTranslation();
@@ -18,7 +20,7 @@ const PageNotFound = () => {
             />
             <h1 className="h4 text-muted">{t('pageNotFound.pageNotFound')}</h1>
             <p className="text-muted">{t('pageNotFound.youCanGo')}</p>
-            <a href="/">{t('pageNotFound.toMainPage')}</a>
+            <Link to={routes.chatPath()}>{t('pageNotFound.toMainPage')}</Link>
           </div>
         </div>
         <div />
