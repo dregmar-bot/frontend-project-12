@@ -11,9 +11,9 @@ const ru = {
         registration: 'Регистрация',
       },
       errors: {
-        ERR_BAD_REQUEST: 'Неверные имя пользователя или пароль',
-        ERR_NETWORK: 'Ошибка сети',
-        unknownError: 'Неизвестная ошибка. Повторите позднее',
+        authorizationError: 'Неверные имя пользователя или пароль',
+        networkError: 'Ошибка сети',
+        undefinedError: 'Неизвестная ошибка. Повторите позднее',
       },
     },
     pageNotFound: {
@@ -30,9 +30,9 @@ const ru = {
         confirmPassword: 'Подтвердите пароль',
       },
       errors: {
-        ERR_BAD_REQUEST: 'Пользователь с таким именем уже зарегистрирован',
-        ERR_NETWORK: 'Ошибка соединения',
-        unknownError: 'Ошибка соединения',
+        signupError: 'Пользователь с таким именем уже зарегистрирован',
+        networkError: 'Ошибка соединения',
+        undefinedError: 'Ошибка соединения',
       },
     },
     chatPage: {
