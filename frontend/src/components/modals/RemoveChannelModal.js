@@ -12,14 +12,10 @@ const RemoveChannelModal = ({ show, close, id }) => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const { status } = await removeChannel(id);
-      if (status === 'ok') {
-        toast.success(t('modals.toast.remove'));
-        setLoading(false);
-        close();
-      } else {
-        toast.error(t('modals.toast.unknownError'));
-      }
+      await removeChannel(id);
+      toast.success(t('modals.toast.remove'));
+      setLoading(false);
+      close();
     } catch {
       toast.error(t('socketErrors.timeout'));
     }
