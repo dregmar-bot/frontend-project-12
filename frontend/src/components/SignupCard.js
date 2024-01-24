@@ -41,15 +41,12 @@ const SignupCardForm = () => {
           authorize({ username, token });
           navigate(routes.chatPath());
         } catch (e) {
-          switch (e.code) {
-            case 'ERR_NETWORK':
-              toast.error(t(`signupPage.errors.${e.code}`));
-              break;
-            case 'ERR_BAD_REQUEST':
-              toast.error(t(`signupPage.errors.${e.code}`));
-              break;
-            default:
-              toast.error(t('signupPage.errors.unknownError'));
+          if (e.response?.status === 409) {
+            toast.error(t(`signupPage.errors.signupError`));
+          } else if (!e.isAxiosError) {
+            toast.error(t('signupPage.errors.undefinedError'));
+          } else {
+            toast.error(t('signupPage.errors.networkError'));
           }
         }
         setSubmitting(false);
@@ -76,7 +73,7 @@ const SignupCardForm = () => {
               className="invalid-feedback"
             />
           </div>
-          <div className="form-floating mb-4">
+          <div className="form-floating mb-3">
             <Field
               type="password"
               name="password"
