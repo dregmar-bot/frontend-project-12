@@ -20,13 +20,13 @@ const RenameChannelModal = ({ show, close, id }) => {
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
-      .test(
-        'name is duplicated',
-        `${t('yupErrors.channelNameIsDuplicated')}`,
-        (name) => !channelNames.includes(name),
-      )
-      .min(3, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`)
-      .max(20, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`),
+    .test(
+      'name is duplicated',
+      'channelNameIsDuplicated',
+      (name) => !channelNames.includes(name),
+    )
+    .min(3, 'channelNameLength')
+    .max(20, 'channelNameLength'),
   });
 
   const handleChange = (e) => setValue(e.target.value);
@@ -42,7 +42,7 @@ const RenameChannelModal = ({ show, close, id }) => {
         setValue('');
         close();
       }).catch((err) => {
-        const errorMessage = err.name === 'ValidationError' ? err.message : t('socketErrors.timeout');
+        const errorMessage = err.name === 'ValidationError' ? t(`yupErrors.${err.message}`) : t('socketErrors.timeout');
         setError(errorMessage);
         setLoading(false);
       });
