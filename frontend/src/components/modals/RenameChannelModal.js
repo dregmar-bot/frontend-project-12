@@ -8,11 +8,10 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { channelsSelectors } from '../../slices/channels';
 import ApiContext from '../../contexts/apiContext';
+import {ErrorMessage, Field, Form, Formik} from "formik";
 
 const RenameChannelModal = ({ show, close, id }) => {
   const [isLoading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
-  const [error, setError] = useState(null);
   const { renameChannel } = useContext(ApiContext);
   const inputEl = useRef(null);
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
@@ -29,63 +28,60 @@ const RenameChannelModal = ({ show, close, id }) => {
     .max(20, 'channelNameLength'),
   });
 
-  const handleChange = (e) => setValue(e.target.value);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const name = value;
-    channelNameSchema.validate({ name })
-      .then(async () => {
-        await renameChannel(id, name);
-        setLoading(false);
-        toast.success(t('modals.toast.rename'));
-        setValue('');
-        close();
-      }).catch((err) => {
-        const errorMessage = err.name === 'ValidationError' ? t(`yupErrors.${err.message}`) : t('socketErrors.timeout');
-        setError(errorMessage);
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
-    setError(null);
-    setValue('');
     if (inputEl.current) {
       inputEl.current.focus();
     }
   }, [show]);
 
   return (
-    <div>
-      <Modal show={show} onHide={close} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{t('modals.channelModal.rename')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <input
-                ref={inputEl}
-                name="name"
-                id="new-name"
-                className={`mb-2 form-control ${error ? 'is-invalid' : ''}`}
-                value={value}
-                onChange={handleChange}
-              />
-              <label className="visually-hidden" htmlFor="new-name">{t('modals.channelModal.channelName')}</label>
-              { error ? (<div className="invalid-feedback">{error}</div>) : null}
+    <Modal show={show} onHide={close} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('modals.channelModal.rename')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Formik
+          initialValues={{ name: '' }}
+          validationSchema={channelNameSchema}
+          onSubmit={async ({ name }) => {
+            try {
+              await renameChannel(id, name);
+              toast.success(t('modals.toast.rename'));
+              setLoading(false);
+              close();
+            } catch {
+              toast.error(t('socketErrors.timeout'));
+              setLoading(false);
+            }
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <div>
+                <Field
+                  name="name"
+                  required
+                  innerRef={inputEl}
+                  className={`mb-2 form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
+                >
+                </Field>
+                <label className="visually-hidden form-label" htmlFor="name">{t('modals.channelModal.channelName')}</label>
+                <ErrorMessage
+                  name="name"
+                  render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
+                />
+              </div>
               <div className="d-flex justify-content-end">
                 <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.channelModal.cancel')}</button>
                 <button type="submit" className="btn btn-primary" disabled={isLoading}>
                   {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.sending')}
                 </button>
               </div>
-            </div>
-          </form>
-        </Modal.Body>
-      </Modal>
-    </div>
+            </Form>
+          )}
+        </Formik>
+      </Modal.Body>
+    </Modal>
   );
 };
 
