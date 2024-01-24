@@ -6,16 +6,18 @@ import { useTranslation } from 'react-i18next';
 import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { channelsSelectors } from '../../slices/channels';
 import ApiContext from '../../contexts/apiContext';
-import {ErrorMessage, Field, Form, Formik} from "formik";
 
 const RenameChannelModal = ({ show, close, id }) => {
   const [isLoading, setLoading] = useState(false);
   const { renameChannel } = useContext(ApiContext);
   const inputEl = useRef(null);
-  const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
   const { t } = useTranslation();
+  const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
+  const editingChannel = useSelector((state) => channelsSelectors.selectById(state, id));
+  const editingChannelName = !!editingChannel ? editingChannel.name : '';
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
@@ -41,7 +43,7 @@ const RenameChannelModal = ({ show, close, id }) => {
       </Modal.Header>
       <Modal.Body>
         <Formik
-          initialValues={{ name: '' }}
+          initialValues={{ name: editingChannelName}}
           validationSchema={channelNameSchema}
           onSubmit={async ({ name }) => {
             try {
