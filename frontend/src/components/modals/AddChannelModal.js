@@ -23,11 +23,11 @@ const AddChannelModal = ({ show, close }) => {
     name: Yup.string()
       .test(
         'name is duplicated',
-        `${t('yupErrors.channelNameIsDuplicated')}`,
+        'channelNameIsDuplicated',
         (name) => !channelNames.includes(name),
       )
-      .min(3, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`)
-      .max(20, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`),
+      .min(3, 'channelNameLength')
+      .max(20, 'channelNameLength'),
   });
 
   const handleChange = (e) => setValue(e.target.value);
@@ -43,7 +43,7 @@ const AddChannelModal = ({ show, close }) => {
         dispatch(switchChannel(data.id));
         close();
       }).catch((err) => {
-        const errorMessage = err.name === 'ValidationError' ? err.message : t('socketErrors.timeout');
+        const errorMessage = err.name === 'ValidationError' ? t(`yupErrors.${err.message}`) : t('socketErrors.timeout');
         setError(errorMessage);
         setLoading(false);
       });
