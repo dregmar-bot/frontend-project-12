@@ -36,15 +36,11 @@ const RenameChannelModal = ({ show, close, id }) => {
     const name = value;
     channelNameSchema.validate({ name })
       .then(async () => {
-        const { status } = await renameChannel(id, name);
-        if (status === 'ok') {
-          setLoading(false);
-          toast.success(t('modals.toast.rename'));
-          setValue('');
-          close();
-        } else {
-          toast.error(t('modals.toast.unknownError'));
-        }
+        await renameChannel(id, name);
+        setLoading(false);
+        toast.success(t('modals.toast.rename'));
+        setValue('');
+        close();
       }).catch((err) => {
         const errorMessage = err.name === 'ValidationError' ? err.message : t('socketErrors.timeout');
         setError(errorMessage);
