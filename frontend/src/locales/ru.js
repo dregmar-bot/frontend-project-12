@@ -52,13 +52,9 @@ const ru = {
       },
     },
     yupErrors: {
+      channelNameLength: 'От 3 до 20 символов',
       channelNameIsDuplicated: 'Канал с таким именем уже создан',
-      minSymbols: 'От {{count}}',
-      maxSymbols: {
-        key_one: 'до {{count}} символа',
-        key_few: 'до {{count}} символов',
-        key_many: 'до {{count}} символов',
-      },
+      usernameLength: 'От 3 до 20 символов',
       passwordLengthMin: 'Не менее 6 символов',
       passwordLengthMax: 'Не более 50 символов',
       passwordMismatch: 'Пароли должны совпадать',
