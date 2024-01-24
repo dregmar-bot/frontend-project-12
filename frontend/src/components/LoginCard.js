@@ -26,15 +26,12 @@ const LoginCardForm = () => {
           authorize({ username, token });
           navigate(routes.chatPath());
         } catch (e) {
-          switch (e.code) {
-            case 'ERR_BAD_REQUEST':
-              setError(e.code);
-              break;
-            case 'ERR_NETWORK':
-              toast.error(t(`loginPage.errors.${e.code}`));
-              break;
-            default:
-              toast.error(t('loginPage.errors.unknownError'));
+          if (e.response?.status === 401) {
+            setError('authorizationError');
+          } else if (!e.isAxiosError) {
+            toast.error(t('loginPage.errors.undefinedError'));
+          } else {
+            toast.error(t('loginPage.errors.networkError'));
           }
         }
       }}
