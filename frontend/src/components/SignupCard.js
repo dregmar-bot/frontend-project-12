@@ -19,13 +19,13 @@ const SignupCardForm = () => {
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`)
-      .max(20, `${t('yupErrors.minSymbols', { count: 3 })} ${t('yupErrors.maxSymbols.key', { count: 20 })}`),
+      .min(3, 'usernameLength')
+      .max(20, 'usernameLength'),
     password: Yup.string()
-      .min(6, `${t('yupErrors.passwordLengthMin')}`)
-      .max(50, `${t('yupErrors.passwordLengthMax')}`),
+      .min(6, 'passwordLengthMin')
+      .max(50, 'passwordLengthMax'),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], `${t('yupErrors.passwordMismatch')}`),
+      .oneOf([Yup.ref('password')], 'passwordMismatch'),
   });
 
   return (
@@ -68,9 +68,8 @@ const SignupCardForm = () => {
             />
             <label className="form-label" htmlFor="username">{t('signupPage.signupCard.username')}</label>
             <ErrorMessage
-              component="div"
               name="username"
-              className="invalid-feedback"
+              render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
             />
           </div>
           <div className="form-floating mb-3">
@@ -85,9 +84,8 @@ const SignupCardForm = () => {
             />
             <label className="form-label" htmlFor="password">{t('signupPage.signupCard.password')}</label>
             <ErrorMessage
-              component="div"
               name="password"
-              className="invalid-feedback"
+              render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
             />
           </div>
           <div className="form-floating mb-4">
@@ -102,9 +100,8 @@ const SignupCardForm = () => {
             />
             <label htmlFor="confirmPassword" className="form-label">{t('signupPage.signupCard.confirmPassword')}</label>
             <ErrorMessage
-              component="div"
               name="confirmPassword"
-              className="invalid-feedback"
+              render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
             />
           </div>
           <button
