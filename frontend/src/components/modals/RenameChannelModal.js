@@ -45,6 +45,8 @@ const RenameChannelModal = ({ show, close, id }) => {
         <Formik
           initialValues={{ name: editingChannelName}}
           validationSchema={channelNameSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={async ({ name }) => {
             try {
               await renameChannel(id, name);
