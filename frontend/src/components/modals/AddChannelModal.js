@@ -44,6 +44,8 @@ const AddChannelModal = ({ show, close }) => {
         <Formik
           initialValues={{ name: '' }}
           validationSchema={channelNameSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
           onSubmit={async ({ name }) => {
             try {
               const { data } = await addChannel({ name });
