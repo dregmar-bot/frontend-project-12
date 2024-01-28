@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Button, FloatingLabel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
@@ -41,7 +42,7 @@ const LoginCardForm = () => {
           className="col-12 col-md-6 mt-3 mt-mb-0"
         >
           <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
-          <div className="form-floating mb-3">
+          <FloatingLabel className="mb-3" label={t('loginPage.loginForm.username')}>
             <Field
               name="username"
               autoComplete="username"
@@ -50,9 +51,8 @@ const LoginCardForm = () => {
               id="username"
               className={`form-control ${error ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="username">{t('loginPage.loginForm.username')}</label>
-          </div>
-          <div className="form-floating mb-4">
+          </FloatingLabel>
+          <FloatingLabel className="mb-4" label={t('loginPage.loginForm.password')}>
             <Field
               type="password"
               name="password"
@@ -63,14 +63,14 @@ const LoginCardForm = () => {
               className={`form-control ${error ? 'is-invalid' : ''}`}
             />
             {error ? <div className="invalid-tooltip">{t(`loginPage.errors.${error}`)}</div> : null}
-            <label className="form-label" htmlFor="password">{t('loginPage.loginForm.password')}</label>
-          </div>
-          <button
+          </FloatingLabel>
+          <Button
             type="submit"
-            className="w-100 mb-3 btn btn-outline-primary"
+            variant="outline-primary"
+            className="w-100 mb-3"
           >
             {t('loginPage.loginForm.login')}
-          </button>
+          </Button>
         </Form>
       )}
     </Formik>
