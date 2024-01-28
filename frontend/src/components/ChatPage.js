@@ -6,7 +6,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { addMessages } from '../slices/messages';
 import { addChannels, switchChannel } from '../slices/channels';
-import Navbar from './Navbar';
+import NavigationBar from './NavigationBar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
 import AuthContext from '../contexts/authContext.js';
@@ -40,7 +40,7 @@ const ChatPage = () => {
 
   return (
     <div className="h-100 d-flex flex-column" id="chat">
-      <Navbar />
+      <NavigationBar />
       <div className="container h-100 my-4 overflow-hidden rounded shadow">
         <div className="row h-100 bg-white flex-md-row">
           <ChannelBox />
