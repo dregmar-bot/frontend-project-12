@@ -45,12 +45,13 @@ const ChannelBox = () => {
         <Nav.Item as="li" className="w-100" key={channel.id} id={channel.id}>
           <Button
             variant={channel.id === channelId ? 'secondary' : ''}
-            className="w-100 rounded-0 text-start text-truncate btn"
+            className="w-100 rounded-0 text-start text-truncate"
             onClick={handleSwitchChannel}
           >
             <span className="me-1">
-              # {name}
+              #
             </span>
+            {name}
           </Button>
         </Nav.Item>
       );
@@ -65,8 +66,9 @@ const ChannelBox = () => {
             onClick={handleSwitchChannel}
           >
             <span className="me-1">
-              # {name}
+              #
             </span>
+            {name}
           </Button>
           <Dropdown.Toggle
             type="button"
