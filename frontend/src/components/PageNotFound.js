@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar';
+import NavigationBar from './NavigationBar';
 import pageNotFound from '../images/404.png';
 import routes from '../routes';
 
@@ -11,7 +11,7 @@ const PageNotFound = () => {
     <div className="h-100">
       <div className="h-100" id="chat">
         <div className="d-flex flex-column h-100">
-          <Navbar />
+          <NavigationBar />
           <div className="text-center">
             <img
               alt="Страница не найдена"
