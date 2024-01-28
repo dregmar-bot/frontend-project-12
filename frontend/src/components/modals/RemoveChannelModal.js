@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import ApiContext from '../../contexts/apiContext';
@@ -30,8 +30,8 @@ const RemoveChannelModal = ({ show, close, id }) => {
         <Modal.Body>
           <p className="lead">{t('modals.removeChannelModal.areYouSure')}</p>
           <div className="d-flex justify-content-end">
-            <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.removeChannelModal.cancel')}</button>
-            <button type="button" className="btn btn-danger" onClick={handleSubmit} disabled={isLoading}>{t('modals.removeChannelModal.remove')}</button>
+            <Button variant="secondary" className="me-2" onClick={close}>{t('modals.removeChannelModal.cancel')}</Button>
+            <Button variant="danger" onClick={handleSubmit} disabled={isLoading}>{t('modals.removeChannelModal.remove')}</Button>
           </div>
         </Modal.Body>
       </Modal>
