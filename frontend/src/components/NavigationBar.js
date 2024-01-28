@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Button, Navbar } from 'react-bootstrap';
 import AuthContext from '../contexts/authContext';
 import routes from '../routes';
 
-const Navbar = () => {
+const NavigationBar = () => {
   const { activeUser, deauthorize } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -13,13 +14,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+    <Navbar expand="lg" bg="white" className="shadow-sm">
       <div className="container">
         <Link to={routes.chatPath()} className="navbar-brand">Hexlet Chat</Link>
-        { activeUser ? <button type="button" className="btn btn-primary" onClick={handleEscape}>Выйти</button> : null}
+        { activeUser ? <Button variant="primary" onClick={handleEscape}>Выйти</Button> : null}
       </div>
-    </nav>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default NavigationBar;
