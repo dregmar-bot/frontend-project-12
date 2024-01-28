@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
+import { Dropdown, Button, ButtonGroup, Nav } from 'react-bootstrap';
 import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { channelsSelectors, switchChannel } from '../slices/channels';
@@ -42,32 +42,32 @@ const ChannelBox = () => {
     const name = filter.clean(channel.name);
     if (!channel.removable) {
       return (
-        <li className="nav-item w-100" key={channel.id} id={channel.id}>
-          <button
-            type="button"
-            className={`w-100 rounded-0 text-start text-truncate btn ${channel.id === channelId ? 'btn-secondary' : ''}`}
+        <Nav.Item as="li" className="w-100" key={channel.id} id={channel.id}>
+          <Button
+            variant={channel.id === channelId ? 'secondary' : ''}
+            className="w-100 rounded-0 text-start text-truncate btn"
             onClick={handleSwitchChannel}
           >
             <span className="me-1">
               # {name}
             </span>
-          </button>
-        </li>
+          </Button>
+        </Nav.Item>
       );
     }
 
     return (
-      <li className="nav-item w-100" key={channel.id} id={channel.id}>
+      <Nav.Item as="li" className="w-100" key={channel.id} id={channel.id}>
         <Dropdown as={ButtonGroup} className="d-flex" key={channel.id}>
-          <button
-            type="button"
-            className={`w-100 rounded-0 text-start text-truncate btn ${channel.id === channelId ? 'btn-secondary' : ''}`}
+          <Button
+            variant={channel.id === channelId ? 'secondary' : ''}
+            className="w-100 rounded-0 text-start text-truncate"
             onClick={handleSwitchChannel}
           >
             <span className="me-1">
               # {name}
             </span>
-          </button>
+          </Button>
           <Dropdown.Toggle
             type="button"
             as="button"
@@ -83,7 +83,7 @@ const ChannelBox = () => {
             <Dropdown.Item href="#" onClick={handleRenameChannel}>{t('chatPage.channelBox.rename')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </li>
+      </Nav.Item>
     );
   });
 
@@ -91,7 +91,7 @@ const ChannelBox = () => {
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>{t('chatPage.channelBox.channels')}</b>
-        <Button type="button" className="p-0 text-primary btn btn-group-vertical" variant="link" onClick={handleCreateChannel}>
+        <Button className="p-0 text-primary btn-group-vertical" variant="link" onClick={handleCreateChannel}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="21" height="21" fill="currentColor">
             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -99,9 +99,9 @@ const ChannelBox = () => {
           <span className="visually-hidden">+</span>
         </Button>
       </div>
-      <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
+      <Nav as="ul" id="channel-box" className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {list}
-      </ul>
+      </Nav>
       <AddChannelModal show={addModalIsOpen} close={closeAddModal} />
       <RemoveChannelModal show={removeModalIsOpen} close={closeRemoveModal} id={editingChannel} />
       <RenameChannelModal show={renameModalIsOpen} close={closeRenameModal} id={editingChannel} />
