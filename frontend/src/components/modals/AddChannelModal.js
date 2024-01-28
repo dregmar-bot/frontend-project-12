@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { channelsSelectors, switchChannel } from '../../slices/channels';
 import ApiContext from '../../contexts/apiContext';
@@ -64,6 +64,7 @@ const AddChannelModal = ({ show, close }) => {
               <div>
                 <Field
                   name="name"
+                  id="name"
                   required
                   innerRef={inputEl}
                   className={`mb-2 form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
@@ -76,10 +77,10 @@ const AddChannelModal = ({ show, close }) => {
                 />
               </div>
               <div className="d-flex justify-content-end">
-                <button type="button" className="me-2 btn btn-secondary" onClick={close}>{t('modals.channelModal.cancel')}</button>
-                <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                <Button variant="secondary" className="me-2" onClick={close}>{t('modals.channelModal.cancel')}</Button>
+                <Button variant="primary" type="submit" disabled={isLoading}>
                   {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.sending')}
-                </button>
+                </Button>
               </div>
             </Form>
           )}
