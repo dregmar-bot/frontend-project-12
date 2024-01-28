@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Field, Form, Formik, ErrorMessage,
 } from 'formik';
+import { Button, FloatingLabel } from 'react-bootstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -57,7 +58,7 @@ const SignupCardForm = () => {
           className="col-12 col-md-6 mt-3 mt-mb-0"
         >
           <h1 className="text-center mb-4">{t('signupPage.signupCard.signup')}</h1>
-          <div className="form-floating mb-3">
+          <FloatingLabel className="mb-3" label={t('signupPage.signupCard.username')}>
             <Field
               name="username"
               autoComplete="username"
@@ -66,13 +67,12 @@ const SignupCardForm = () => {
               id="username"
               className={`form-control ${errors.username && touched.username ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="username">{t('signupPage.signupCard.username')}</label>
             <ErrorMessage
               name="username"
               render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
             />
-          </div>
-          <div className="form-floating mb-3">
+          </FloatingLabel>
+          <FloatingLabel className="mb-3" label={t('signupPage.signupCard.password')}>
             <Field
               type="password"
               name="password"
@@ -82,13 +82,12 @@ const SignupCardForm = () => {
               id="password"
               className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="password">{t('signupPage.signupCard.password')}</label>
             <ErrorMessage
               name="password"
               render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
             />
-          </div>
-          <div className="form-floating mb-4">
+          </FloatingLabel>
+          <FloatingLabel className="mb-4" label={t('signupPage.signupCard.confirmPassword')}>
             <Field
               type="password"
               name="confirmPassword"
@@ -98,19 +97,19 @@ const SignupCardForm = () => {
               id="confirmPassword"
               className={`form-control ${errors.confirmPassword && touched.password ? 'is-invalid' : ''}`}
             />
-            <label htmlFor="confirmPassword" className="form-label">{t('signupPage.signupCard.confirmPassword')}</label>
             <ErrorMessage
               name="confirmPassword"
               render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
             />
-          </div>
-          <button
+          </FloatingLabel>
+          <Button
             type="submit"
-            className="w-100 btn btn-outline-primary"
+            variant="outline-primary"
+            className="w-100"
             disabled={submitting}
           >
             {t('signupPage.signupCard.register')}
-          </button>
+          </Button>
         </Form>
       )}
     </Formik>
