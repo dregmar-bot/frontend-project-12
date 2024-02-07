@@ -10,14 +10,11 @@ const channelsSlice = createSlice({
     addChannels: channelsAdapter.addMany,
     renameChannel: channelsAdapter.updateOne,
     removeChannel: channelsAdapter.removeOne,
-    switchChannel: (state, action) => {
-      state.currentChannel = action.payload;
-    },
   },
 });
 
 export const channelsSelectors = channelsAdapter.getSelectors((state) => state.channels);
 export const {
-  addChannel, addChannels, removeChannel, renameChannel, switchChannel
+  addChannel, addChannels, removeChannel, renameChannel
 } = channelsSlice.actions;
 export default channelsSlice.reducer;
