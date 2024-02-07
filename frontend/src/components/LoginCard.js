@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import logo from '../images/logo.png';
 import AuthContext from '../contexts/authContext.js';
@@ -108,7 +108,6 @@ const LoginCard = () => (
   <div className="card shadow-sm">
     <LoginCardBody />
     <LoginCardFooter />
-    <ToastContainer />
   </div>
 );
 
