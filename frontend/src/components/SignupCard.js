@@ -4,7 +4,7 @@ import {
   Field, Form, Formik, ErrorMessage,
 } from 'formik';
 import { Button, FloatingLabel } from 'react-bootstrap';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -132,7 +132,6 @@ const SignupCardBody = () => {
 const SignupCard = () => (
   <div className="card shadow-sm">
     <SignupCardBody />
-    <ToastContainer />
   </div>
 );
 
