@@ -4,6 +4,7 @@ const routes = {
     loginPath: () => '/api/v1/login',
     signupPath: () => '/api/v1/signup',
   },
+  undefinedPath: () => '*',
   chatPath: () => '/',
   loginPath: () => '/login',
   signupPath: () => '/signup',
