@@ -5,19 +5,26 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { channelsSelectors } from '../../slices/channels';
 import ApiContext from '../../contexts/apiContext';
+import { closeModal, setEditingChannel } from '../../slices/ui';
 
-const RenameChannelModal = ({ show, close, id }) => {
+const RenameChannelModal = () => {
   const [isLoading, setLoading] = useState(false);
   const { renameChannel } = useContext(ApiContext);
   const inputEl = useRef(null);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
-  const editingChannel = useSelector((state) => channelsSelectors.selectById(state, id));
-  const editingChannelName = !!editingChannel ? editingChannel.name : '';
+  const isModalOpen = useSelector((state) => state.ui.modalsState.isOpen);
+  const modalType = useSelector((state) => state.ui.modalsState.modalType);
+  const channelId = useSelector((state) => state.ui.modalsState.editingChannel);
+  const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
+
+  const showModal = isModalOpen && modalType === 'rename';
+  const editingChannelName = channelId ? channel.name : '';
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
@@ -34,10 +41,10 @@ const RenameChannelModal = ({ show, close, id }) => {
     if (inputEl.current) {
       inputEl.current.focus();
     }
-  }, [show]);
+  }, [showModal]);
 
   return (
-    <Modal show={show} onHide={close} centered>
+    <Modal show={showModal} onHide={() => dispatch(closeModal())} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.channelModal.rename')}</Modal.Title>
       </Modal.Header>
@@ -49,10 +56,11 @@ const RenameChannelModal = ({ show, close, id }) => {
           validateOnChange={false}
           onSubmit={async ({ name }) => {
             try {
-              await renameChannel(id, name);
+              await renameChannel(channelId, name);
               toast.success(t('modals.toast.rename'));
               setLoading(false);
-              close();
+              dispatch(closeModal());
+              dispatch(setEditingChannel(null))
             } catch {
               toast.error(t('socketErrors.timeout'));
               setLoading(false);
@@ -77,7 +85,7 @@ const RenameChannelModal = ({ show, close, id }) => {
                 />
               </div>
               <div className="d-flex justify-content-end">
-                <Button variant="secondary" className="me-2" onClick={close}>{t('modals.channelModal.cancel')}</Button>
+                <Button variant="secondary" className="me-2" onClick={() => dispatch(closeModal())}>{t('modals.channelModal.cancel')}</Button>
                 <Button variant="primary" type="submit" disabled={isLoading}>
                   {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.sending')}
                 </Button>
