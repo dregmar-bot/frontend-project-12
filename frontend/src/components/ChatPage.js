@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { addMessages } from '../slices/messages';
-import { addChannels, switchChannel } from '../slices/channels';
+import { addChannels } from '../slices/channels';
+import { switchChannel } from '../slices/ui';
 import NavigationBar from './NavigationBar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
@@ -49,7 +50,6 @@ const ChatPage = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
