@@ -1,45 +1,38 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, Button, ButtonGroup, Nav } from 'react-bootstrap';
-import filter from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
-import { channelsSelectors, switchChannel } from '../slices/channels';
+import { channelsSelectors } from '../slices/channels';
+import { switchChannel, setEditingChannel, setModalType, openModal } from '../slices/ui';
 import AddChannelModal from './modals/AddChannelModal';
 import RemoveChannelModal from './modals/RemoveChannelModal';
 import RenameChannelModal from './modals/RenameChannelModal';
 
 const ChannelBox = () => {
-  const [addModalIsOpen, setAddModalIsOpen] = useState(false);
-  const [renameModalIsOpen, setRenameModalIsOpen] = useState(false);
-  const [removeModalIsOpen, setRemoveModalIsOpen] = useState(false);
-  const [editingChannel, setEditingChannel] = useState(null);
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const channelId = useSelector((state) => state.ui.currentChannel);
+  const channels = useSelector(channelsSelectors.selectAll);
 
-  const handleCreateChannel = () => setAddModalIsOpen(true);
+  const handleCreateChannel = () => {
+    dispatch(openModal());
+    dispatch(setModalType('add'));
+  };
 
   const handleRenameChannel = (e) => {
-    const parentLi = e.target.closest('li');
-    setEditingChannel(parentLi.id);
-    setRenameModalIsOpen(true);
+    dispatch(openModal());
+    dispatch(setEditingChannel(Number(e.target.id)));
+    dispatch(setModalType('rename'));
   };
 
   const handleRemoveChannel = (e) => {
-    const parentLi = e.target.closest('li');
-    setEditingChannel(parentLi.id);
-    setRemoveModalIsOpen(true);
+    dispatch(openModal());
+    dispatch(setEditingChannel(Number(e.target.id)));
+    dispatch(setModalType('remove'));
   };
-
-  const closeAddModal = () => setAddModalIsOpen(false);
-  const closeRenameModal = () => setRenameModalIsOpen(false);
-  const closeRemoveModal = () => setRemoveModalIsOpen(false);
-
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const channelId = useSelector((state) => state.channels.currentChannel);
-  const channels = useSelector(channelsSelectors.selectAll);
 
   const list = channels.map((channel) => {
     const handleSwitchChannel = () => dispatch(switchChannel(channel.id));
-    const name = filter.clean(channel.name);
     if (!channel.removable) {
       return (
         <Nav.Item as="li" className="w-100" key={channel.id} id={channel.id}>
@@ -51,7 +44,7 @@ const ChannelBox = () => {
             <span className="me-1">
               #
             </span>
-            {name}
+            {channel.name}
           </Button>
         </Nav.Item>
       );
@@ -68,7 +61,7 @@ const ChannelBox = () => {
             <span className="me-1">
               #
             </span>
-            {name}
+            {channel.name}
           </Button>
           <Dropdown.Toggle
             type="button"
@@ -81,8 +74,8 @@ const ChannelBox = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#" onClick={handleRemoveChannel}>{t('chatPage.channelBox.remove')}</Dropdown.Item>
-            <Dropdown.Item href="#" onClick={handleRenameChannel}>{t('chatPage.channelBox.rename')}</Dropdown.Item>
+            <Dropdown.Item id={channel.id} href="#" onClick={handleRemoveChannel}>{t('chatPage.channelBox.remove')}</Dropdown.Item>
+            <Dropdown.Item id={channel.id} href="#" onClick={handleRenameChannel}>{t('chatPage.channelBox.rename')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Nav.Item>
@@ -104,9 +97,9 @@ const ChannelBox = () => {
       <Nav as="ul" id="channel-box" className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {list}
       </Nav>
-      <AddChannelModal show={addModalIsOpen} close={closeAddModal} />
-      <RemoveChannelModal show={removeModalIsOpen} close={closeRemoveModal} id={editingChannel} />
-      <RenameChannelModal show={renameModalIsOpen} close={closeRenameModal} id={editingChannel} />
+      <AddChannelModal />
+      <RemoveChannelModal />
+      <RenameChannelModal />
     </div>
   );
 };
