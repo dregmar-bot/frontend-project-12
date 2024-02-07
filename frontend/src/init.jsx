@@ -7,6 +7,7 @@ import { Provider, ErrorBoundary } from '@rollbar/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
 import ru from './locales/ru';
+import { ToastContainer } from 'react-toastify';
 import App from './components/App';
 import AuthProvider from './providers/AuthProvider';
 import ApiContext from './contexts/apiContext';
@@ -14,12 +15,14 @@ import messages, { addMessage } from './slices/messages';
 import channels, {
   addChannel, removeChannel, renameChannel,
 } from './slices/channels';
+import ui from './slices/ui';
 
 const init = async () => {
   const store = configureStore({
     reducer: {
       channels,
       messages,
+      ui,
     },
   });
 
@@ -77,6 +80,7 @@ const init = async () => {
             <StoreProvider store={store}>
               <ApiContext.Provider value={api}>
                 <App />
+                <ToastContainer />
               </ApiContext.Provider>
             </StoreProvider>
           </AuthProvider>
