@@ -23,7 +23,6 @@ const PageNotFound = () => {
             <Link to={routes.chatPath()}>{t('pageNotFound.toMainPage')}</Link>
           </div>
         </div>
-        <div />
       </div>
     </div>
   );
