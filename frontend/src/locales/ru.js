@@ -1,5 +1,9 @@
 const ru = {
   translation: {
+    navigationBar: {
+      linkToMain: 'Hexlet Chat',
+      logout: 'Выйти',
+    },
     loginPage: {
       loginForm: {
         username: 'Ваш ник',
