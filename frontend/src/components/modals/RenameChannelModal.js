@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { channelsSelectors } from '../../slices/channels';
 import ApiContext from '../../contexts/apiContext';
-import { closeModal, setEditingChannel } from '../../slices/ui';
+import { closeModal } from '../../slices/ui';
 
 const RenameChannelModal = () => {
   const [isLoading, setLoading] = useState(false);
@@ -60,7 +60,6 @@ const RenameChannelModal = () => {
               toast.success(t('modals.toast.rename'));
               setLoading(false);
               dispatch(closeModal());
-              dispatch(setEditingChannel(null))
             } catch {
               toast.error(t('socketErrors.timeout'));
               setLoading(false);
