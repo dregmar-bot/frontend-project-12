@@ -15,20 +15,20 @@ const uiSlice = createSlice({
     switchChannel: (state, action) => {
       state.currentChannel = action.payload;
     },
-    openModal: (state) => {
+    openModal: (state, action) => {
       state.modalsState.isOpen = true;
+      const { type, channel } = action.payload;
+      state.modalsState.modalType = type;
+      state.modalsState.editingChannel = channel;
+
     },
     closeModal: (state) => {
       state.modalsState.isOpen = false;
-    },
-    setModalType: (state, action) => {
-      state.modalsState.modalType = action.payload;
-    },
-    setEditingChannel: (state, action) => {
-      state.modalsState.editingChannel = action.payload;
+      state.modalsState.modalType = null;
+      state.modalsState.editingChannel = null;
     },
   },
 })
 
-export const { switchChannel, closeModal, openModal, setEditingChannel, setModalType } = uiSlice.actions;
+export const { switchChannel, closeModal, openModal } = uiSlice.actions;
 export default uiSlice.reducer;
