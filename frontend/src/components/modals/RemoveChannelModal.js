@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import ApiContext from '../../contexts/apiContext';
-import { closeModal, switchChannel, setEditingChannel } from '../../slices/ui';
+import { closeModal, switchChannel } from '../../slices/ui';
 
 const RemoveChannelModal = () => {
   const [isLoading, setLoading] = useState(false);
@@ -29,7 +29,6 @@ const RemoveChannelModal = () => {
       toast.success(t('modals.toast.remove'));
       setLoading(false);
       dispatch(closeModal());
-      dispatch(setEditingChannel(null))
     } catch {
       toast.error(t('socketErrors.timeout'));
     }
