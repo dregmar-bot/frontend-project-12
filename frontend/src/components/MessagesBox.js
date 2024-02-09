@@ -34,7 +34,7 @@ const MessagesBox = () => {
       try {
         const message = { body: filter.clean(body), channelId, username: activeUser.username };
         await sendMessage(message);
-        formik.values.body = '';
+        formik.resetForm();
       } catch {
         toast.error(t('socketErrors.timeout'));
       }
