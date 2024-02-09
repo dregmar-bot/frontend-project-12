@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Field, Form, Formik, ErrorMessage,
@@ -13,7 +13,6 @@ import AuthContext from '../contexts/authContext.js';
 import routes from '../routes';
 
 const SignupCardForm = () => {
-  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { authorize } = useContext(AuthContext);
@@ -33,9 +32,8 @@ const SignupCardForm = () => {
     <Formik
       initialValues={{ username: '', password: '', confirmPassword: '' }}
       validationSchema={SignupSchema}
-      onSubmit={async (values) => {
+      onSubmit={async (values, { setSubmitting }) => {
         const { username, password } = values;
-        setSubmitting(true);
         try {
           const response = await axios.post(routes.serverApi.signupPath(), { username, password });
           const { token } = response.data;
@@ -43,7 +41,7 @@ const SignupCardForm = () => {
           navigate(routes.chatPath());
         } catch (e) {
           if (e.response?.status === 409) {
-            toast.error(t(`signupPage.errors.signupError`));
+            toast.error(t('signupPage.errors.signupError'));
           } else if (!e.isAxiosError) {
             toast.error(t('signupPage.errors.undefinedError'));
           } else {
@@ -106,7 +104,6 @@ const SignupCardForm = () => {
             type="submit"
             variant="outline-primary"
             className="w-100"
-            disabled={submitting}
           >
             {t('signupPage.signupCard.register')}
           </Button>
