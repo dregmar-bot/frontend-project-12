@@ -1,18 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import LoginCard from './LoginCard';
 import NavigationBar from './NavigationBar';
-import AuthContext from '../contexts/authContext';
-import routes from '../routes';
 
 const LoginPage = () => {
-  const { activeUser } = useContext(AuthContext);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (activeUser) {
-      navigate(routes.chatPath());
-    }
-  });
   return (
     <div className="h-100">
       <div className="h-100" id="chat">
