@@ -4,9 +4,7 @@ import { Dropdown, Button, ButtonGroup, Nav } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { channelsSelectors } from '../slices/channels';
 import { switchChannel, openModal } from '../slices/ui';
-import AddChannelModal from './modals/AddChannelModal';
-import RemoveChannelModal from './modals/RemoveChannelModal';
-import RenameChannelModal from './modals/RenameChannelModal';
+import ChannelsModal from './modals/ChannelsModal';
 
 const ChannelBox = () => {
   const dispatch = useDispatch();
@@ -84,9 +82,7 @@ const ChannelBox = () => {
       <Nav as="ul" id="channel-box" className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {list}
       </Nav>
-      <AddChannelModal />
-      <RemoveChannelModal />
-      <RenameChannelModal />
+      <ChannelsModal />
     </div>
   );
 };
