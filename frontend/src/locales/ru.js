@@ -67,16 +67,12 @@ const ru = {
       channelModal: {
         add: 'Добавить канал',
         rename: 'Переименовать канал',
+        remove: 'Удалить',
         channelName: 'Имя канала',
         cancel: 'Отменить',
         submit: 'Отправить',
-        sending: 'Отправка...',
-      },
-      removeChannelModal: {
         removeChannel: 'Удалить канал',
         areYouSure: 'Вы уверены?',
-        remove: 'Удалить',
-        cancel: 'Отменить',
       },
       toast: {
         add: 'Канал создан',
