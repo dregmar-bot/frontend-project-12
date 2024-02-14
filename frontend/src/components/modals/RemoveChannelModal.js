@@ -31,6 +31,7 @@ const RemoveChannelModal = () => {
       dispatch(closeModal());
     } catch {
       toast.error(t('socketErrors.timeout'));
+      setLoading(false);
     }
   };
 
