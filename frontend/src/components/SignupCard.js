@@ -60,7 +60,7 @@ const SignupCardForm = () => {
           required
           value={formik.values.username}
           onChange={formik.handleChange}
-          placeholder={t('loginPage.loginForm.username')}
+          placeholder={t('signupPage.signupCard.username')}
           id="username"
           className={`form-control ${formik.errors.username && formik.touched.username ? 'is-invalid' : ''}`}
         />
@@ -74,7 +74,7 @@ const SignupCardForm = () => {
           autoComplete="password"
           value={formik.values.password}
           onChange={formik.handleChange}
-          placeholder={t('loginPage.loginForm.password')}
+          placeholder={t('signupPage.signupCard.password')}
           id="password"
           className={`form-control ${formik.errors.password && formik.touched.password ? 'is-invalid' : ''}`}
         />
