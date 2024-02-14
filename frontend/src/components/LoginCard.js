@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Button, FloatingLabel } from 'react-bootstrap';
+import {Button, FloatingLabel, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Field, Form, Formik } from 'formik';
+import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -16,64 +16,67 @@ const LoginCardForm = () => {
   const { authorize } = useContext(AuthContext);
   const [error, setError] = useState(null);
 
-  return (
-    <Formik
-      initialValues={{ username: '', password: '' }}
-      onSubmit={async (values) => {
-        const { username, password } = values;
-        try {
-          const response = await axios.post(routes.serverApi.loginPath(), { username, password });
-          const { token } = response.data;
-          authorize({ username, token });
-          navigate(routes.chatPath());
-        } catch (e) {
-          if (e.response?.status === 401) {
-            setError('authorizationError');
-          } else if (!e.isAxiosError) {
-            toast.error(t('loginPage.errors.undefinedError'));
-          } else {
-            toast.error(t('loginPage.errors.networkError'));
-          }
+  const formik = useFormik({
+    initialValues: { username: '', password: '' },
+    onSubmit: async ({ username, password }) => {
+      formik.setSubmitting(true);
+      try {
+        const response = await axios.post(routes.serverApi.loginPath(), { username, password });
+        const { token } = response.data;
+        authorize({ username, token });
+        formik.setSubmitting(false);
+        navigate(routes.chatPath());
+      } catch (e) {
+        if (e.response?.status === 401) {
+          setError('authorizationError');
+        } else if (!e.isAxiosError) {
+          toast.error(t('loginPage.errors.undefinedError'));
+        } else {
+          toast.error(t('loginPage.errors.networkError'));
         }
-      }}
-    >
-      {() => (
-        <Form
-          className="col-12 col-md-6 mt-3 mt-mb-0"
-        >
-          <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
-          <FloatingLabel className="mb-3" label={t('loginPage.loginForm.username')}>
-            <Field
-              name="username"
-              autoComplete="username"
-              required
-              placeholder={t('loginPage.loginForm.username')}
-              id="username"
-              className={`form-control ${error ? 'is-invalid' : ''}`}
-            />
-          </FloatingLabel>
-          <FloatingLabel className="mb-4" label={t('loginPage.loginForm.password')}>
-            <Field
-              type="password"
-              name="password"
-              autoComplete="current-password"
-              required
-              placeholder={t('loginPage.loginForm.password')}
-              id="password"
-              className={`form-control ${error ? 'is-invalid' : ''}`}
-            />
-            {error ? <div className="invalid-tooltip">{t(`loginPage.errors.${error}`)}</div> : null}
-          </FloatingLabel>
-          <Button
-            type="submit"
-            variant="outline-primary"
-            className="w-100 mb-3"
-          >
-            {t('loginPage.loginForm.login')}
-          </Button>
-        </Form>
-      )}
-    </Formik>
+        formik.setSubmitting(false);
+      }
+    },
+  });
+
+  return (
+    <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+      <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
+      <FloatingLabel className="mb-3" label={t('loginPage.loginForm.username')}>
+        <Form.Control
+          name="username"
+          autoComplete="username"
+          required
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          placeholder={t('loginPage.loginForm.username')}
+          id="username"
+          className={`form-control ${error ? 'is-invalid' : ''}`}
+        />
+      </FloatingLabel>
+      <FloatingLabel className="mb-4" label={t('loginPage.loginForm.password')}>
+        <Form.Control
+          type="password"
+          name="password"
+          required
+          autoComplete="current-password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          placeholder={t('loginPage.loginForm.password')}
+          id="password"
+          className={`form-control ${error ? 'is-invalid' : ''}`}
+        />
+        {error ? <div className="invalid-tooltip">{t(`loginPage.errors.${error}`)}</div> : null}
+      </FloatingLabel>
+      <Button
+        type="submit"
+        disabled={formik.isSubmitting}
+        variant="outline-primary"
+        className="w-100 mb-3"
+      >
+        {t('loginPage.loginForm.login')}
+      </Button>
+    </Form>
   );
 };
 

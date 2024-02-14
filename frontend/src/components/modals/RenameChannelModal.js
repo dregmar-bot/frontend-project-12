@@ -1,18 +1,18 @@
 import React, {
-  useState, useContext, useEffect, useRef,
+  useContext, useEffect, useRef,
 } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { Modal, Button } from 'react-bootstrap';
+import {Modal, Button, Form} from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { channelsSelectors } from '../../slices/channels';
-import ApiContext from '../../contexts/apiContext';
-import { closeModal } from '../../slices/ui';
+import { useFormik } from "formik";
+import { channelsSelectors } from '../../slices/channels.js';
+import ApiContext from '../../contexts/apiContext.js';
+import { closeModal } from '../../slices/ui.js';
+
 
 const RenameChannelModal = () => {
-  const [isLoading, setLoading] = useState(false);
   const { renameChannel } = useContext(ApiContext);
   const inputEl = useRef(null);
   const { t } = useTranslation();
@@ -28,6 +28,7 @@ const RenameChannelModal = () => {
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
+    .required('isRequired')
     .test(
       'name is duplicated',
       'channelNameIsDuplicated',
@@ -35,6 +36,25 @@ const RenameChannelModal = () => {
     )
     .min(3, 'channelNameLength')
     .max(20, 'channelNameLength'),
+  });
+
+  const formik = useFormik({
+    initialValues: { name: editingChannelName },
+    validationSchema: channelNameSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async ({ name }) => {
+      formik.setSubmitting(true);
+      try {
+        await renameChannel(channelId, name);
+        toast.success(t('modals.toast.rename'));
+        formik.setSubmitting(false);
+        dispatch(closeModal());
+      } catch {
+        toast.error(t('socketErrors.timeout'));
+        formik.setSubmitting(false);
+      }
+    }
   });
 
   useEffect(() => {
@@ -49,49 +69,32 @@ const RenameChannelModal = () => {
         <Modal.Title>{t('modals.channelModal.rename')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Formik
-          initialValues={{ name: editingChannelName }}
-          validationSchema={channelNameSchema}
-          validateOnBlur={false}
-          validateOnChange={false}
-          onSubmit={async ({ name }) => {
-            try {
-              await renameChannel(channelId, name);
-              toast.success(t('modals.toast.rename'));
-              setLoading(false);
-              dispatch(closeModal());
-            } catch {
-              toast.error(t('socketErrors.timeout'));
-              setLoading(false);
-            }
-          }}
-        >
-          {({ errors, touched }) => (
-            <Form>
-              <div>
-                <Field
-                  name="name"
-                  id="name"
-                  required
-                  innerRef={inputEl}
-                  className={`mb-2 form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
-                >
-                </Field>
-                <label className="visually-hidden form-label" htmlFor="name">{t('modals.channelModal.channelName')}</label>
-                <ErrorMessage
-                  name="name"
-                  render={(msg) => <div className="invalid-feedback">{t(`yupErrors.${msg}`)}</div>}
-                />
-              </div>
-              <div className="d-flex justify-content-end">
-                <Button variant="secondary" className="me-2" onClick={() => dispatch(closeModal())}>{t('modals.channelModal.cancel')}</Button>
-                <Button variant="primary" type="submit" disabled={isLoading}>
-                  {!isLoading ? t('modals.channelModal.submit') : t('modals.channelModal.sending')}
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Control
+            onChange={formik.handleChange}
+            ref={inputEl}
+            name="name"
+            id="name"
+            value={formik.values.name}
+            className={`mb-2 ${formik.errors.name && formik.touched.name ? 'is-invalid' : ''}`}
+          />
+          <Form.Label
+            className="visually-hidden"
+            htmlFor="name"
+          >
+            {t('modals.channelModal.channelName')}
+          </Form.Label>
+          {formik.touched.name && formik.errors.name ?
+            <div className="invalid-feedback">{t(`yupErrors.${formik.errors.name}`)}</div>
+            :
+            ''}
+        </Form>
+        <div className="d-flex justify-content-end">
+          <Button variant="secondary" className="me-2" onClick={() => dispatch(closeModal())}>{t('modals.channelModal.cancel')}</Button>
+          <Button variant="primary" type="submit" disabled={formik.isSubmitting}>
+            {t('modals.channelModal.submit')}
+          </Button>
+        </div>
       </Modal.Body>
     </Modal>
   );
