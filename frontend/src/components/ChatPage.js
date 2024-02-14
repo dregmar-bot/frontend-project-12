@@ -15,7 +15,7 @@ import routes from '../routes';
 const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { getAuthHeader } = useContext(AuthContext);
+  const { getAuthHeader, deauthorize } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,8 +26,15 @@ const ChatPage = () => {
         dispatch(addMessages(response.data.messages));
         dispatch(addChannels(response.data.channels));
         dispatch(switchChannel(response.data.currentChannelId));
-      } catch {
-        toast.error(t('chatPage.toast.fetchError'));
+      } catch (e) {
+        if (!e.isAxiosError) {
+          toast.error(t('chatPage.toast.undefinedError'));
+        } else if (e.response?.status === 401) {
+          toast.error(t('chatPage.toast.tokenError'));
+          deauthorize();
+        } else {
+          toast.error(t('chatPage.toast.fetchError'));
+        }
       }
     };
     fetchData();
