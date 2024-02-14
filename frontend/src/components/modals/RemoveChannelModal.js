@@ -38,13 +38,13 @@ const RemoveChannelModal = () => {
     <div>
       <Modal show={showModal} onHide={() => dispatch(closeModal())} centered>
         <Modal.Header closeButton>
-          <Modal.Title>{t('modals.removeChannelModal.removeChannel')}</Modal.Title>
+          <Modal.Title>{t('modals.channelModal.removeChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="lead">{t('modals.removeChannelModal.areYouSure')}</p>
+          <p className="lead">{t('modals.channelModal.areYouSure')}</p>
           <div className="d-flex justify-content-end">
-            <Button variant="secondary" className="me-2" onClick={() => dispatch(closeModal())}>{t('modals.removeChannelModal.cancel')}</Button>
-            <Button variant="danger" onClick={handleSubmit} disabled={isLoading}>{t('modals.removeChannelModal.remove')}</Button>
+            <Button variant="secondary" className="me-2" onClick={() => dispatch(closeModal())}>{t('modals.channelModal.cancel')}</Button>
+            <Button variant="danger" onClick={handleSubmit} disabled={isLoading}>{t('modals.channelModal.remove')}</Button>
           </div>
         </Modal.Body>
       </Modal>
