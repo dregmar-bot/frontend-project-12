@@ -50,7 +50,7 @@ const RenameChannelModal = () => {
       </Modal.Header>
       <Modal.Body>
         <Formik
-          initialValues={{ name: editingChannelName}}
+          initialValues={{ name: editingChannelName }}
           validationSchema={channelNameSchema}
           validateOnBlur={false}
           validateOnChange={false}
