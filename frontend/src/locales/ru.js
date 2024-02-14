@@ -58,6 +58,7 @@ const ru = {
       },
     },
     yupErrors: {
+      isRequired: 'Обязательное поле',
       channelNameLength: 'От 3 до 20 символов',
       channelNameIsDuplicated: 'Канал с таким именем уже создан',
       usernameLength: 'От 3 до 20 символов',
