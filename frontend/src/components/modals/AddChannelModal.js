@@ -18,10 +18,6 @@ const AddChannelModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
-  const isModalOpen = useSelector((state) => state.ui.modalsState.isOpen);
-  const modalType = useSelector((state) => state.ui.modalsState.modalType);
-
-  const showModal = isModalOpen && modalType === 'add';
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
@@ -57,10 +53,10 @@ const AddChannelModal = () => {
     if (inputEl.current) {
       inputEl.current.focus();
     }
-  }, [showModal]);
+  }, []);
 
   return (
-    <Modal show={showModal} onHide={() => dispatch(closeModal())} centered>
+    <>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.channelModal.add')}</Modal.Title>
       </Modal.Header>
@@ -92,7 +88,7 @@ const AddChannelModal = () => {
           </Button>
         </div>
       </Modal.Body>
-    </Modal>
+    </>
   );
 };
 
