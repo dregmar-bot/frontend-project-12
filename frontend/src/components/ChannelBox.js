@@ -1,6 +1,6 @@
 import React  from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Dropdown, Button, ButtonGroup, Nav, Modal} from 'react-bootstrap';
+import { Dropdown, Button, ButtonGroup, Nav, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { channelsSelectors } from '../slices/channels.js';
 import { switchChannel, openModal, closeModal } from '../slices/ui.js';
