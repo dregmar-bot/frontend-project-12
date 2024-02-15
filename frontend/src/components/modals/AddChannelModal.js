@@ -41,17 +41,14 @@ const AddChannelModal = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async ({ name }) => {
-      formik.setSubmitting(true);
       try {
         const filteredName = filter.clean(name);
         const { data } = await addChannel({ name: filteredName });
         toast.success(t('modals.toast.add'));
-        formik.setSubmitting(false);
         dispatch(switchChannel(data.id));
         dispatch(closeModal());
       } catch {
         toast.error(t('socketErrors.timeout'));
-        formik.setSubmitting(false);
       }
     }
   });
