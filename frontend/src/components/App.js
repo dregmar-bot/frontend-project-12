@@ -13,7 +13,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={routes.undefinedPath()} element={<PageNotFound />} />
         <Route path={routes.chatPath()} element={(
             <PrivateRoute>
               <ChatPage />
@@ -22,6 +21,7 @@ const App = () => {
         />
         <Route path={routes.loginPath()} element={<LoginPage />} />
         <Route path={routes.signupPath()} element={<SignupPage />} />
+        <Route path={routes.undefinedPath()} element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   )
