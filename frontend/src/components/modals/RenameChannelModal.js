@@ -44,15 +44,12 @@ const RenameChannelModal = () => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async ({ name }) => {
-      formik.setSubmitting(true);
       try {
         await renameChannel(channelId, name);
         toast.success(t('modals.toast.rename'));
-        formik.setSubmitting(false);
         dispatch(closeModal());
       } catch {
         toast.error(t('socketErrors.timeout'));
-        formik.setSubmitting(false);
       }
     }
   });
