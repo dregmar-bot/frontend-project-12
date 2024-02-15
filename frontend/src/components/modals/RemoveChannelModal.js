@@ -13,11 +13,7 @@ const RemoveChannelModal = () => {
   const dispatch = useDispatch();
   const currentChannel = useSelector((state) => state.ui.currentChannel);
   const defaultChannel = useSelector((state) => state.ui.defaultChannel);
-  const isModalOpen = useSelector((state) => state.ui.modalsState.isOpen);
-  const modalType = useSelector((state) => state.ui.modalsState.modalType);
   const channel = useSelector((state) => state.ui.modalsState.editingChannel);
-
-  const showModal = isModalOpen && modalType === 'remove';
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -37,7 +33,7 @@ const RemoveChannelModal = () => {
 
   return (
     <div>
-      <Modal show={showModal} onHide={() => dispatch(closeModal())} centered>
+      <>
         <Modal.Header closeButton>
           <Modal.Title>{t('modals.channelModal.removeChannel')}</Modal.Title>
         </Modal.Header>
@@ -48,7 +44,7 @@ const RemoveChannelModal = () => {
             <Button variant="danger" onClick={handleSubmit} disabled={isLoading}>{t('modals.channelModal.remove')}</Button>
           </div>
         </Modal.Body>
-      </Modal>
+      </>
     </div>
   );
 };
