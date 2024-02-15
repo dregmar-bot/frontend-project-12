@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import {Modal, Button, Form} from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from "formik";
@@ -18,12 +18,9 @@ const RenameChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
-  const isModalOpen = useSelector((state) => state.ui.modalsState.isOpen);
-  const modalType = useSelector((state) => state.ui.modalsState.modalType);
   const channelId = useSelector((state) => state.ui.modalsState.editingChannel);
   const channel = useSelector((state) => channelsSelectors.selectById(state, channelId));
 
-  const showModal = isModalOpen && modalType === 'rename';
   const editingChannelName = channelId ? channel.name : '';
 
   const channelNameSchema = Yup.object({
@@ -58,10 +55,10 @@ const RenameChannelModal = () => {
     if (inputEl.current) {
       inputEl.current.focus();
     }
-  }, [showModal]);
+  }, []);
 
   return (
-    <Modal show={showModal} onHide={() => dispatch(closeModal())} centered>
+    <>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.channelModal.rename')}</Modal.Title>
       </Modal.Header>
@@ -93,7 +90,7 @@ const RenameChannelModal = () => {
           </Button>
         </div>
       </Modal.Body>
-    </Modal>
+    </>
   );
 };
 
