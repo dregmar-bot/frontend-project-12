@@ -19,12 +19,10 @@ const LoginCardForm = () => {
   const formik = useFormik({
     initialValues: { username: '', password: '' },
     onSubmit: async ({ username, password }) => {
-      formik.setSubmitting(true);
       try {
         const response = await axios.post(routes.serverApi.loginPath(), { username, password });
         const { token } = response.data;
         authorize({ username, token });
-        formik.setSubmitting(false);
         navigate(routes.chatPath());
       } catch (e) {
         if (e.response?.status === 401) {
@@ -34,7 +32,6 @@ const LoginCardForm = () => {
         } else {
           toast.error(t('loginPage.errors.networkError'));
         }
-        formik.setSubmitting(false);
       }
     },
   });
