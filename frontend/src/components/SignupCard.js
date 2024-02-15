@@ -30,12 +30,10 @@ const SignupCardForm = () => {
     initialValues: { username: '', password: '', confirmPassword: '' },
     validationSchema: SignupSchema,
     onSubmit: async ({ username, password }) => {
-      formik.setSubmitting(true);
       try {
         const response = await axios.post(routes.serverApi.signupPath(), { username, password });
         const { token } = response.data;
         authorize({ username, token });
-        formik.setSubmitting(false);
         navigate(routes.chatPath());
       } catch (e) {
         if (e.response?.status === 409) {
@@ -45,7 +43,6 @@ const SignupCardForm = () => {
         } else {
           toast.error(t('signupPage.errors.networkError'));
         }
-        formik.setSubmitting(false);
       }
     }
   })
