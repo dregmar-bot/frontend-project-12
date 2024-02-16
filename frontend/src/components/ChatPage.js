@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import AuthContext from '../contexts/authContext.js';
 import { addMessages } from '../slices/messages';
 import { addChannels } from '../slices/channels';
 import { switchChannel } from '../slices/ui';
-import NavigationBar from './NavigationBar';
 import ChannelBox from './ChannelBox';
 import MessagesBox from './MessagesBox';
-import AuthContext from '../contexts/authContext.js';
+import Layout from './Layout';
 import routes from '../routes';
 
 const ChatPage = () => {
@@ -41,8 +41,7 @@ const ChatPage = () => {
   }, [t, dispatch, getAuthHeader]);
 
   return (
-    <div className="h-100 d-flex flex-column" id="chat">
-      <NavigationBar />
+    <Layout>
       <div className="container h-100 my-4 overflow-hidden rounded shadow">
         <div className="row h-100 bg-white flex-md-row">
           <ChannelBox />
@@ -51,7 +50,7 @@ const ChatPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
