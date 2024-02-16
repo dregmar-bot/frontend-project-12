@@ -1,10 +1,16 @@
-import React  from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Dropdown, Button, ButtonGroup, Nav } from 'react-bootstrap';
+import React from 'react';
+import {
+  useSelector, useDispatch
+} from 'react-redux';
+import {
+  Dropdown, Button, ButtonGroup, Nav
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { channelsSelectors } from '../slices/channels.js';
-import { switchChannel, openModal } from '../slices/ui.js';
-import ChannelsModal from './modals/index.js'
+import {
+  switchChannel, openModal
+} from '../slices/ui.js';
+import ChannelsModal from './modals/index.js';
 
 const ChannelBox = () => {
   const dispatch = useDispatch();
@@ -12,9 +18,8 @@ const ChannelBox = () => {
   const channelId = useSelector((state) => state.ui.currentChannel);
   const channels = useSelector(channelsSelectors.selectAll);
 
-
   const handleOpenModal = (type, channel = null) => {
-    dispatch(openModal({ type, channel }))
+    dispatch(openModal({ type, channel }));
   };
 
   const list = channels.map((channel) => {

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { useFormik } from "formik";
+import { useFormik } from 'formik';
 import { channelsSelectors } from '../../slices/channels.js';
 import ApiContext from '../../contexts/apiContext.js';
 import { closeModal } from '../../slices/ui.js';
@@ -25,14 +25,14 @@ const RenameChannelModal = () => {
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
-    .required('isRequired')
-    .test(
-      'name is duplicated',
-      'channelNameIsDuplicated',
-      (name) => !channelNames.includes(name),
-    )
-    .min(3, 'channelNameLength')
-    .max(20, 'channelNameLength'),
+      .required('isRequired')
+      .test(
+        'name is duplicated',
+        'channelNameIsDuplicated',
+        (name) => !channelNames.includes(name),
+      )
+      .min(3, 'channelNameLength')
+      .max(20, 'channelNameLength'),
   });
 
   const formik = useFormik({
@@ -48,7 +48,7 @@ const RenameChannelModal = () => {
       } catch {
         toast.error(t('socketErrors.timeout'));
       }
-    }
+    },
   });
 
   useEffect(() => {
@@ -78,10 +78,9 @@ const RenameChannelModal = () => {
           >
             {t('modals.channelModal.channelName')}
           </Form.Label>
-          {formik.touched.name && formik.errors.name ?
-            <div className="invalid-feedback">{t(`yupErrors.${formik.errors.name}`)}</div>
-            :
-            ''}
+          {formik.touched.name && formik.errors.name
+            ? <div className="invalid-feedback">{t(`yupErrors.${formik.errors.name}`)}</div>
+            : ''}
         </Form>
         <div className="d-flex justify-content-end">
           <Button variant="secondary" className="me-2" onClick={() => dispatch(closeModal())}>{t('modals.channelModal.cancel')}</Button>

@@ -39,7 +39,7 @@ const MessagesBox = () => {
         toast.error(t('socketErrors.timeout'));
       }
     },
-  })
+  });
 
   return (
     <div className="d-flex flex-column h-100">

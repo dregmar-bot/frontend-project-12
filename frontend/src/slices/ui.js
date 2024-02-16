@@ -11,6 +11,7 @@ const uiSlice = createSlice({
       editingChannel: null,
     },
   },
+/* eslint no-param-reassign: "off" */
   reducers: {
     switchChannel: (state, action) => {
       state.currentChannel = action.payload;
@@ -20,7 +21,6 @@ const uiSlice = createSlice({
       const { type, channel } = action.payload;
       state.modalsState.modalType = type;
       state.modalsState.editingChannel = channel;
-
     },
     closeModal: (state) => {
       state.modalsState.isOpen = false;
@@ -28,7 +28,9 @@ const uiSlice = createSlice({
       state.modalsState.editingChannel = null;
     },
   },
-})
+/* eslint no-param-reassign: "on" */
+});
+
 
 export const { switchChannel, closeModal, openModal } = uiSlice.actions;
 export default uiSlice.reducer;

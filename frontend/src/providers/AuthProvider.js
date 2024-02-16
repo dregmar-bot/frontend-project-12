@@ -3,7 +3,7 @@ import AuthContext from '../contexts/authContext';
 
 const AuthProvider = ({ children }) => {
   const [activeUser, setUser] = useState(
-    () => JSON.parse(localStorage.getItem('user'))
+    () => JSON.parse(localStorage.getItem('user')),
   );
 
   const authorize = useCallback((user) => {

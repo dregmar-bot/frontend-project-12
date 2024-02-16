@@ -38,7 +38,7 @@ const ChatPage = () => {
       }
     };
     fetchData();
-  }, [t, dispatch, getAuthHeader]);
+  }, [t, dispatch, getAuthHeader, deauthorize]);
 
   return (
     <Layout>

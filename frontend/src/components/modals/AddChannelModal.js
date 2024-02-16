@@ -21,7 +21,7 @@ const AddChannelModal = () => {
 
   const channelNameSchema = Yup.object({
     name: Yup.string()
-    .required('isRequired')
+      .required('isRequired')
       .test(
         'name is duplicated',
         'channelNameIsDuplicated',
@@ -46,7 +46,7 @@ const AddChannelModal = () => {
       } catch {
         toast.error(t('socketErrors.timeout'));
       }
-    }
+    },
   });
 
   useEffect(() => {
@@ -76,10 +76,9 @@ const AddChannelModal = () => {
           >
             {t('modals.channelModal.channelName')}
           </Form.Label>
-          {formik.touched.name && formik.errors.name ?
-            <div className="invalid-feedback">{t(`yupErrors.${formik.errors.name}`)}</div>
-            :
-            ''}
+          {formik.touched.name && formik.errors.name
+            ? <div className="invalid-feedback">{t(`yupErrors.${formik.errors.name}`)}</div>
+            : ''}
         </Form>
         <div className="d-flex justify-content-end">
           <Button variant="secondary" className="me-2" onClick={() => dispatch(closeModal())}>{t('modals.channelModal.cancel')}</Button>

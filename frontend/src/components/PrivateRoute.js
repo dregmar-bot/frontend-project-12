@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import AuthContext from '../contexts/authContext';
 import { Navigate, useLocation } from 'react-router-dom';
-import routes from "../routes";
+import AuthContext from '../contexts/authContext';
+import routes from '../routes';
 
 const PrivateRoute = ({ children }) => {
   const { activeUser } = useContext(AuthContext);
@@ -12,4 +12,4 @@ const PrivateRoute = ({ children }) => {
   );
 };
 
-export default PrivateRoute
+export default PrivateRoute;

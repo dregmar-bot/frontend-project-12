@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import {Button, FloatingLabel, Form} from 'react-bootstrap';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -44,8 +44,8 @@ const SignupCardForm = () => {
           toast.error(t('signupPage.errors.networkError'));
         }
       }
-    }
-  })
+    },
+  });
 
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">

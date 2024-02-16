@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import {Button, FloatingLabel, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import logo from '../images/logo.png';
@@ -94,8 +93,9 @@ const LoginCardFooter = () => {
   return (
     <div className="card-footer p-4">
       <div className="text-center">
-        <span>{t('loginPage.loginCardFooter.haveNoAccount')} </span>
-
+        <span>
+          {t('loginPage.loginCardFooter.haveNoAccount')}
+        </span>
         <Link to={routes.signupPath()}>{t('loginPage.loginCardFooter.registration')}</Link>
       </div>
     </div>
