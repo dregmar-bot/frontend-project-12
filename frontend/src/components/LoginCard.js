@@ -39,7 +39,7 @@ const LoginCardForm = () => {
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
       <h1 className="text-center mb-4">{t('loginPage.loginForm.login')}</h1>
-      <FloatingLabel className="mb-3" label={t('loginPage.loginForm.username')}>
+      <FloatingLabel className="mb-3" controlId="username" label={t('loginPage.loginForm.username')}>
         <Form.Control
           name="username"
           autoComplete="username"
@@ -47,11 +47,10 @@ const LoginCardForm = () => {
           value={formik.values.username}
           onChange={formik.handleChange}
           placeholder={t('loginPage.loginForm.username')}
-          id="username"
           className={`form-control ${error ? 'is-invalid' : ''}`}
         />
       </FloatingLabel>
-      <FloatingLabel className="mb-4" label={t('loginPage.loginForm.password')}>
+      <FloatingLabel className="mb-4" controlId="password" label={t('loginPage.loginForm.password')}>
         <Form.Control
           type="password"
           name="password"
@@ -60,7 +59,6 @@ const LoginCardForm = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
           placeholder={t('loginPage.loginForm.password')}
-          id="password"
           className={`form-control ${error ? 'is-invalid' : ''}`}
         />
         {error ? <div className="invalid-tooltip">{t(`loginPage.errors.${error}`)}</div> : null}
