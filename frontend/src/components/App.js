@@ -9,23 +9,22 @@ import PageNotFound from './PageNotFound';
 import SignupPage from './SignupPage';
 import ChatPage from './ChatPage';
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={routes.chatPath()}
-          element={(
-            <PrivateRoute>
-              <ChatPage />
-            </PrivateRoute>
-          )}
-        />
-        <Route path={routes.loginPath()} element={<LoginPage />} />
-        <Route path={routes.signupPath()} element={<SignupPage />} />
-        <Route path={routes.undefinedPath()} element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route
+        path={routes.chatPath()}
+        element={(
+          <PrivateRoute>
+            <ChatPage />
+          </PrivateRoute>
+        )}
+      />
+      <Route path={routes.loginPath()} element={<LoginPage />} />
+      <Route path={routes.signupPath()} element={<SignupPage />} />
+      <Route path={routes.undefinedPath()} element={<PageNotFound />} />
+    </Routes>
+  </BrowserRouter>
+);
+
 export default App;

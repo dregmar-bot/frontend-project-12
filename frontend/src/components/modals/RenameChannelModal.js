@@ -11,7 +11,6 @@ import { channelsSelectors } from '../../slices/channels.js';
 import ApiContext from '../../contexts/apiContext.js';
 import { closeModal } from '../../slices/ui.js';
 
-
 const RenameChannelModal = () => {
   const { renameChannel } = useContext(ApiContext);
   const inputEl = useRef(null);
