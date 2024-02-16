@@ -50,7 +50,7 @@ const SignupCardForm = () => {
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
       <h1 className="text-center mb-4">{t('signupPage.signupCard.signup')}</h1>
-      <FloatingLabel className="mb-3" label={t('signupPage.signupCard.username')}>
+      <FloatingLabel className="mb-3" controlId="username" label={t('signupPage.signupCard.username')}>
         <Form.Control
           name="username"
           autoComplete="username"
@@ -58,12 +58,11 @@ const SignupCardForm = () => {
           value={formik.values.username}
           onChange={formik.handleChange}
           placeholder={t('signupPage.signupCard.username')}
-          id="username"
-          className={`form-control ${formik.errors.username && formik.touched.username ? 'is-invalid' : ''}`}
+          className={`${formik.errors.username && formik.touched.username ? 'is-invalid' : ''}`}
         />
         {formik.errors.username ? <div className="invalid-tooltip">{t(`yupErrors.${formik.errors.username}`)}</div> : null}
       </FloatingLabel>
-      <FloatingLabel className="mb-4" label={t('signupPage.signupCard.password')}>
+      <FloatingLabel className="mb-4" controlId="password" label={t('signupPage.signupCard.password')}>
         <Form.Control
           type="password"
           name="password"
@@ -72,12 +71,11 @@ const SignupCardForm = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
           placeholder={t('signupPage.signupCard.password')}
-          id="password"
-          className={`form-control ${formik.errors.password && formik.touched.password ? 'is-invalid' : ''}`}
+          className={`${formik.errors.password && formik.touched.password ? 'is-invalid' : ''}`}
         />
         {formik.errors.password ? <div className="invalid-tooltip">{t(`yupErrors.${formik.errors.password}`)}</div> : null}
       </FloatingLabel>
-      <FloatingLabel className="mb-4" label={t('signupPage.signupCard.confirmPassword')}>
+      <FloatingLabel className="mb-4" controlId="confirmPassword" label={t('signupPage.signupCard.confirmPassword')}>
         <Form.Control
           type="password"
           name="confirmPassword"
@@ -86,8 +84,7 @@ const SignupCardForm = () => {
           required
           autoComplete="confirmPassword"
           placeholder={t('signupPage.signupCard.password')}
-          id="confirmPassword"
-          className={`form-control ${formik.errors.confirmPassword && formik.touched.confirmPassword ? 'is-invalid' : ''}`}
+          className={`${formik.errors.confirmPassword && formik.touched.confirmPassword ? 'is-invalid' : ''}`}
         />
         {formik.errors.confirmPassword ? <div className="invalid-tooltip">{t(`yupErrors.${formik.errors.confirmPassword}`)}</div> : null}
       </FloatingLabel>
