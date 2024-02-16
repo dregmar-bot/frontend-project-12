@@ -1,30 +1,16 @@
 import React  from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Dropdown, Button, ButtonGroup, Nav, Modal } from 'react-bootstrap';
+import { Dropdown, Button, ButtonGroup, Nav } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { channelsSelectors } from '../slices/channels.js';
-import { switchChannel, openModal, closeModal } from '../slices/ui.js';
-import getModal from './modals/index.js'
-
-const renderModal = (type, isOpen, dispatch) => {
-  if (!type) {
-    return null;
-  }
-  const Component = getModal(type);
-  return (
-    <Modal show={isOpen} onHide={() => dispatch(closeModal())} centered>
-      <Component />
-    </Modal>
-  );
-};
+import { switchChannel, openModal } from '../slices/ui.js';
+import ChannelsModal from './modals/index.js'
 
 const ChannelBox = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const channelId = useSelector((state) => state.ui.currentChannel);
   const channels = useSelector(channelsSelectors.selectAll);
-  const modalType = useSelector((state) => state.ui.modalsState.modalType);
-  const isModalOpen = useSelector((state) => state.ui.modalsState.isOpen);
 
 
   const handleOpenModal = (type, channel = null) => {
@@ -97,7 +83,7 @@ const ChannelBox = () => {
       <Nav as="ul" id="channel-box" className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {list}
       </Nav>
-      {renderModal(modalType, isModalOpen, dispatch)}
+      <ChannelsModal />
     </div>
   );
 };
