@@ -34,7 +34,7 @@ const ru = {
         confirmPassword: 'Подтвердите пароль',
       },
       errors: {
-        signupError: 'Пользователь с таким именем уже зарегистрирован',
+        signupError: 'Такой пользователь уже существует',
         networkError: 'Ошибка соединения',
         undefinedError: 'Ошибка соединения',
       },
